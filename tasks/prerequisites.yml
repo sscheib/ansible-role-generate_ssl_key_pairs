@@ -1,0 +1,10 @@
+---
+# merely a wrapper to include the real checks
+- name: 'prerequisites | Ensure variables are fined properly'
+  ansible.builtin.include_tasks:
+    file: 'assert.yml'
+
+- name: 'prerequisites | Include tasks to install the required packages'
+  ansible.builtin.include_tasks:
+    file: 'prerequisites_packages.yml'
+...

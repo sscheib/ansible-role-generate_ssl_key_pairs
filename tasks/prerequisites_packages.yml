@@ -1,0 +1,47 @@
+---
+- name: 'prerequisites_packages | Gather facts from the PKI host {{ _crt_pki_host }}'
+  ansible.builtin.setup:
+    gather_subset:
+      - '!all'
+      - '!min'
+      - 'distribution'
+      - 'user'
+  delegate_to: '{{ _crt_pki_host }}'
+  remote_user: '{{ _crt_pki_host_remote_user }}'
+  delegate_facts: false
+  vars:
+    ansible_ssh_port: '{{ _crt_pki_host_remote_port }}'
+
+- name: 'prerequisites_packages | Load OS dependent variables'
+  ansible.builtin.include_vars: "{{ lookup('first_found', params) }}"
+  vars:
+    params:
+      files:
+        - >-
+          {{
+            ansible_distribution ~ '-' ~
+            ansible_distribution_major_version ~ '.yml'
+          }}
+        - >-
+          {{
+            ansible_os_family ~ '_' ~
+            ansible_distribution_major_version ~ '.yml'
+          }}
+        - '{{ ansible_distribution }}.yml'
+        - '{{ ansible_os_family }}.yml'
+        - 'main.yml'  # fallback, vars/main.yml is always loaded by Ansible
+      paths:
+        - '{{ role_path }}/vars'
+        - '{{ playbook_dir }}/vars'
+
+- name: 'prerequisites_packages | Ensure required packages are installed'
+  ansible.builtin.package:
+    name: '{{ _crt_required_packages }}'
+    state: 'present'
+    update_cache: true
+  become: true
+  delegate_to: '{{ _crt_pki_host }}'
+  remote_user: '{{ _crt_pki_host_remote_user }}'
+  vars:
+    ansible_ssh_port: '{{ _crt_pki_host_remote_port }}'
+...

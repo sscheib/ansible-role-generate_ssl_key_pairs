@@ -1,0 +1,24 @@
+---
+- name: 'Include tasks to check the prerequisites'
+  ansible.builtin.include_tasks:
+    file: 'prerequisites.yml'
+
+- name: 'Include tasks to generate the SSL keys for {{ _crt_cert_fqdn }}'
+  ansible.builtin.include_tasks:
+    file: 'generate_ssl_keys.yml'
+
+- name: 'Include tasks to fetch CA and CSR files'
+  ansible.builtin.include_tasks:
+    file: 'fetch_ca_crl.yml'
+
+- name: 'Include tasks to transfer the certificates to the managed node'
+  ansible.builtin.include_tasks:
+    file: 'transfer_certs.yml'
+
+- name: 'Include tasks to cleanup locally stored files'
+  ansible.builtin.include_tasks:
+    file: 'cleanup.yml'
+  when: >
+    _crt_remove_temporary_local_certificates is defined
+    and _crt_remove_temporary_local_certificates
+...

@@ -1,0 +1,180 @@
+---
+
+#
+# Certificate suffixes
+#
+
+# private key suffix
+_def_crt_priv_key_suffix: 'key.pem'
+
+# certificate (aka public key) suffix
+_def_crt_cert_suffix: 'cert.pem'
+
+# certificate signing request (CSR) suffix
+_def_crt_csr_suffix: 'csr.pem'
+
+# certificate revocation list (CRL) suffix
+_def_crt_crl_suffix: 'crl.pem'
+
+#
+# Certificate Authority CA)
+#
+
+# root directory of the CA
+_def_crt_ca_root_dir: '/root/ca'
+
+# name of the CA certificate (aka public key)
+_def_crt_ca_cert_name: 'ca.{{ _def_crt_cert_suffix }}'
+
+# name of the CA chain certificate (for intermediate CAs)
+_def_crt_ca_chain_cert_name: 'ca-chain.{{ _def_crt_cert_suffix }}'
+
+# name of the CA private key
+_def_crt_ca_priv_key_name: 'ca.{{ _def_crt_priv_key_suffix }}'
+
+# path of the CA's private keys directory
+_def_crt_ca_priv_key_dir_path: '{{ _def_crt_ca_root_dir }}/private'
+
+# path of the CA's certificates directory
+_def_crt_ca_cert_dir_path: '{{ _def_crt_ca_root_dir }}/certs'
+
+# path of the CA's CSR directory
+_def_crt_ca_csr_dir_path: '{{ _def_crt_ca_root_dir }}/csr'
+
+# path of the CA certificate
+_def_crt_ca_cert_path: '{{ _def_crt_ca_cert_dir_path }}/{{ _def_crt_ca_cert_name }}'
+
+# path of the CA chain certificate (for intermediate CAs)
+_def_crt_ca_chain_cert_path: '{{ _def_crt_ca_cert_dir_path }}/{{ _def_crt_ca_chain_cert_name }}'
+
+# path of the CA private key
+_def_crt_ca_priv_key_path: '{{ _def_crt_ca_priv_key_dir_path }}/{{ _def_crt_ca_priv_key_name }}'
+
+# whether to fetch the CA certificate
+_def_crt_ca_fetch_ca_cert: true
+
+# whether to fetch the CA chain certificate (for intermediate CAs)
+_def_crt_ca_fetch_ca_chain_cert: true
+
+#
+# Certificate Signing Request (CSR)
+#
+
+# CSR email
+_def_crt_csr_email: 'owner@example.com'
+
+# CSR organization name (O)
+_def_crt_csr_org: 'Default Organization'
+
+# CSR organization unit name (OU)
+_def_crt_csr_org_unit: 'Default Organizational Unit'
+
+# CSR country name (C)
+_def_crt_csr_country: 'XX'
+
+# CSR state name (S)
+_def_crt_csr_state: 'Default Province'
+
+# CSR locality name (L)
+_def_crt_csr_loc: 'Default Locality'
+
+# CSR extended key usage
+_def_crt_csr_extended_key_usage:
+  - 'clientAuth'
+  - 'serverAuth'
+
+#
+# Certificate Revocation List (CRL)
+#
+
+# whether to fetch the CRL certificate/s
+_def_crt_ca_fetch_ca_crl_cert: true
+
+# whether to combine the CRLs into one CRL file (in case of multiple CRLs to fetch)
+_def_crt_combine_ca_crl_certs: true
+
+# destination name of the combined CRL files
+_def_crt_crl_dest_name: 'ca-chain.{{ _def_crt_crl_suffix }}'
+
+#
+# Private Key
+#
+
+# private key type to generate
+_def_crt_priv_key_type: 'RSA'
+
+# private key length/size to generate
+_def_crt_priv_key_size: 4096
+
+# whether to force private key regeneration (not idempotent!)
+_def_crt_force_priv_key_generation: false
+
+#
+# General
+#
+
+# path on the Ansible controller where to (temporarily) store fetched certificates
+_def_crt_local_dest_path: '/tmp/fetched'
+
+# Permissions of the files inside _def_crt_local_dest_path
+_def_crt_local_dest_path_owner: '{{ ansible_user }}'
+_def_crt_local_dest_path_group: '{{ ansible_user }}'
+_def_crt_local_dest_path_mode: '0700'
+
+# whether to quiet assert
+_def_crt_quiet_assert: true
+
+# SSH port of the PKI host
+_def_crt_pki_host_remote_port: 22
+
+# whether to remove locally stored temporary certificates (will break idempotency)
+_def_crt_remove_temporary_local_certificates: true
+
+#
+# Managed node certificate paths
+#
+
+# private key
+_def_crt_remote_private_key_path: '/root/certs/{{ inventory_hostname }}.{{ _def_crt_priv_key_suffix }}'
+_def_crt_remote_private_key_owner: 'root'
+_def_crt_remote_private_key_group: 'root'
+_def_crt_remote_private_key_mode: '0400'
+
+# private key directory
+_def_crt_remote_private_key_dir_owner: 'root'
+_def_crt_remote_private_key_dir_group: 'root'
+_def_crt_remote_private_key_dir_mode: '0700'
+
+# public key
+_def_crt_remote_public_key_path: '/root/certs/{{ inventory_hostname }}.{{ _def_crt_cert_suffix }}'
+_def_crt_remote_public_key_owner: 'root'
+_def_crt_remote_public_key_group: 'root'
+_def_crt_remote_public_key_mode: '0400'
+
+# public key directory
+_def_crt_remote_public_key_dir_owner: 'root'
+_def_crt_remote_public_key_dir_group: 'root'
+_def_crt_remote_public_key_dir_mode: '0700'
+
+# certificate authority public key
+_def_crt_remote_ca_public_key_path: '/root/certs/ca.{{ _def_crt_cert_suffix }}'
+_def_crt_remote_ca_public_key_owner: 'root'
+_def_crt_remote_ca_public_key_group: 'root'
+_def_crt_remote_ca_public_key_mode: '0400'
+
+# certificate authority public key directory
+_def_crt_remote_ca_public_key_dir_owner: 'root'
+_def_crt_remote_ca_public_key_dir_group: 'root'
+_def_crt_remote_ca_public_key_dir_mode: '0700'
+
+# certificate authority CRL
+_def_crt_remote_ca_crl_path: '/root/certs/ca.{{ _def_crt_crl_suffix }}'
+_def_crt_remote_ca_crl_owner: 'root'
+_def_crt_remote_ca_crl_group: 'root'
+_def_crt_remote_ca_crl_mode: '0400'
+
+# certificate authority CRL directory
+_def_crt_remote_ca_crl_dir_owner: 'root'
+_def_crt_remote_ca_crl_dir_group: 'root'
+_def_crt_remote_ca_crl_dir_mode: '0700'
+...

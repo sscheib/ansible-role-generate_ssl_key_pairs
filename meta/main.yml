@@ -1,0 +1,19 @@
+---
+galaxy_info:
+  role_name: 'generate_ssl_key_pairs'
+  namespace: 'sscheib'
+  author: 'Steffen Scheib'
+  description: 'Generates SSL keys on a PKI host and deploys them to the managed nodes'
+  issue_tracker_url: 'https://github.com/sscheib/ansible-role-generate_ssl_key_pairs/issues'
+  license: 'GPL-2.0-or-later'
+  min_ansible_version: '2.12'
+  platforms:
+    - name: 'EL'
+      versions:
+        - '8'
+
+  galaxy_tags:
+    - 'ssl'
+    - 'certificate'
+dependencies: []
+...

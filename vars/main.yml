@@ -1,0 +1,235 @@
+---
+#
+# mandatory
+#
+
+# fully qualified domain name (FQDN) for the cert
+_crt_cert_fqdn: '{{ crt_cert_fqdn | mandatory }}'
+
+# passphrase for the certificate authority (CA) private key
+_crt_ca_priv_key_pass: '{{ crt_ca_priv_key_pass | mandatory }}'
+
+# public key infrastructure (PKI) host - this is where the key generation will happen
+_crt_pki_host: '{{ crt_pki_host | mandatory }}'
+
+# remote user to connect to the PKI host with
+_crt_pki_host_remote_user: '{{ crt_pki_host_remote_user | mandatory }}'
+
+#
+# optional (no default)
+#
+
+# CRL certificates to fetch
+_crt_ca_crl_certs: '{{ crt_ca_crl_certs | default(undef()) }}'
+
+#
+# optional (with default)
+#
+
+#
+# Certificate suffixes
+#
+
+# private key suffix
+_crt_priv_key_suffix: '{{ crt_priv_key_suffix | default(_def_crt_priv_key_suffix) }}'
+
+# certificate signing request (CSR) suffix
+_crt_csr_suffix: '{{ crt_csr_suffix | default(_def_crt_csr_suffix) }}'
+
+# certificate (aka public key) suffix
+_crt_cert_suffix: '{{ crt_cert_suffix | default(_def_crt_cert_suffix) }}'
+
+# certificate revocation list (CRL) suffix
+_crt_crl_suffix: '{{ crt_crl_suffix | default(_def_crt_crl_suffix) }}'
+
+
+#
+# Certificate Authority CA)
+#
+
+# root directory of the CA on the PKI host
+_crt_ca_root_dir: '{{ crt_ca_root_dir | default(_def_crt_ca_root_dir) }}'
+
+# name of the CA certificate (aka public key)
+_crt_ca_cert_name: '{{ crt_ca_cert_name | default(_def_crt_ca_cert_name) }}'
+
+# name of the CA chain certificate (for intermediate CAs)
+_crt_ca_chain_cert_name: '{{ crt_ca_chain_cert_name | default(_def_crt_ca_chain_cert_name) }}'
+
+# name of the CA private key
+_crt_ca_priv_key_name: '{{ crt_ca_priv_key_name | default(_def_crt_ca_priv_key_name) }}'
+
+# path of the CA's private keys directory
+_crt_ca_priv_key_dir_path: '{{ crt_ca_priv_key_dir_path | default(_def_crt_ca_priv_key_dir_path) }}'
+
+# path of the CA's certificates directory
+_crt_ca_cert_dir_path: '{{ crt_ca_cert_dir_path | default(_def_crt_ca_cert_dir_path) }}'
+
+# path of the CA's CSR directory
+_crt_ca_csr_dir_path: '{{ crt_ca_csr_dir_path | default(_def_crt_ca_csr_dir_path) }}'
+
+# path of the CA certificate
+_crt_ca_cert_path: '{{ crt_ca_cert_path | default(_def_crt_ca_cert_path) }}'
+
+# path of the CA chain certificate (for intermediate CAs)
+_crt_ca_chain_cert_path: '{{ crt_ca_chain_cert_path | default(_def_crt_ca_chain_cert_path) }}'
+
+# path of the CA private key
+_crt_ca_priv_key_path: '{{ crt_ca_priv_key_path | default(_def_crt_ca_priv_key_path) }}'
+
+# whether to fetch the CA certificate
+_crt_ca_fetch_ca_cert: '{{ crt_ca_fetch_ca_cert | default(_def_crt_ca_fetch_ca_cert) }}'
+
+# whether fo fetch the CA chain certificate (for intermediate CAs)
+_crt_ca_fetch_ca_chain_cert: '{{ crt_ca_fetch_ca_chain_cert | default(_def_crt_ca_fetch_ca_chain_cert) }}'
+
+#
+# Certificate Signing Request (CSR)
+#
+
+# CSR email
+_crt_csr_email: '{{ crt_csr_email | default(_def_crt_csr_email) }}'
+
+# CSR organization name (O)
+_crt_csr_org: '{{ crt_csr_org | default(_def_crt_csr_org) }}'
+
+# CSR organization unit name (OU)
+_crt_csr_org_unit: '{{ crt_csr_org_unit | default(_def_crt_csr_org_unit) }}'
+
+# CSR country name (C)
+_crt_csr_country: '{{ crt_csr_country | default(_def_crt_csr_country) }}'
+
+# CSR state name (S)
+_crt_csr_state: '{{ crt_csr_state | default(_def_crt_csr_state) }}'
+
+# CSR locality name (L)
+_crt_csr_loc: '{{ crt_csr_loc | default(_def_crt_csr_loc) }}'
+
+# CSR common name (usually the FQDN)
+_crt_csr_common_name: '{{ crt_csr_common_name | default(_crt_cert_fqdn) }}'
+
+# CSR extended key usage
+_crt_csr_extended_key_usage: '{{ crt_csr_extended_key_usage | default(_def_crt_csr_extended_key_usage) }}'
+
+#
+# Certificate Revocation List (CRL)
+#
+
+# whether to fetch the CRL certificate/s
+_crt_ca_fetch_ca_crl_cert: '{{ crt_ca_fetch_ca_crl_cert | default(_def_crt_ca_fetch_crl_ca_cert) }}'
+
+# whether to combine the CRLs into one CRL file (in case of multiple CRLs to fetch)
+_crt_combine_ca_crl_certs: '{{ crt_combine_ca_crl_certs | default(_def_crt_combine_ca_crl_certs) }}'
+
+# destination name of the combined CRL files
+_crt_crl_dest_name: '{{ crt_crl_dest_name | default(_def_crt_crl_dest_name) }}'
+
+#
+# Private Key
+#
+
+# private key type to generate
+_crt_priv_key_type: '{{ crt_priv_key_type | default(_def_crt_priv_key_type) }}'
+
+# private key length/size to generate
+_crt_priv_key_size: '{{ crt_priv_key_size | default(_def_crt_priv_key_size) }}'
+
+# whether to force private key regeneration (not idempotent!)
+_crt_force_priv_key_generation: '{{ crt_force_priv_key_generation | default(_def_crt_force_priv_key_generation) }}'
+
+#
+# General
+#
+
+# path on the Ansible controller where to (temporarily) store fetched certificates
+_crt_local_dest_path: '{{ crt_local_dest_path | default(_def_crt_local_dest_path) }}'
+
+# Permissions of the files inside _def_crt_local_dest_path
+_crt_local_dest_path_owner: '{{ crt_local_dest_path_owner | default(_def_crt_local_dest_path_owner) }}'
+_crt_local_dest_path_group: '{{ crt_local_dest_path_group | default(_def_crt_local_dest_path_group) }}'
+_crt_local_dest_path_mode: '{{ crt_local_dest_path_mode | default(_def_crt_local_dest_path_mode) }}'
+
+# whether to quiet assert
+_crt_quiet_assert: '{{ crt_quiet_assert | default(_def_crt_quiet_assert) }}'
+
+# SSH port of the PKI host
+_crt_pki_host_remote_port: '{{ crt_pki_host_remote_port | default(_def_crt_pki_host_remote_port) }}'
+
+# whether to remove locally stored temporary certificates (will break idempotency)
+_crt_remove_temporary_local_certificates: >-
+  {{
+    crt_remove_temporary_local_certificates | default(_def_crt_remove_temporary_local_certificates)
+  }}
+
+#
+# Managed node certificate paths
+#
+
+# private key
+_crt_remote_private_key_path: '{{ crt_remote_private_key_path | default(_def_crt_remote_private_key_path) }}'
+_crt_remote_private_key_owner: '{{ crt_remote_private_key_owner | default(_def_crt_remote_private_key_owner) }}'
+_crt_remote_private_key_group: '{{ crt_remote_private_key_group | default(_def_crt_remote_private_key_group) }}'
+_crt_remote_private_key_mode: '{{ crt_remote_private_key_mode | default(_def_crt_remote_private_key_mode) }}'
+
+# private key directory
+_crt_remote_private_key_dir_owner: >-
+  {{
+    crt_remote_private_key_dir_owner | default(_def_crt_remote_private_key_dir_owner)
+  }}
+_crt_remote_private_key_dir_group: >-
+  {{
+    crt_remote_private_key_dir_group | default(_def_crt_remote_private_key_dir_group)
+  }}
+_crt_remote_private_key_dir_mode: >-
+  {{
+    crt_remote_private_key_dir_mode | default(_def_crt_remote_private_key_dir_mode)
+  }}
+
+# public key
+_crt_remote_public_key_path: '{{ crt_remote_public_key_path | default(_def_crt_remote_public_key_path) }}'
+_crt_remote_public_key_owner: '{{ crt_remote_public_key_owner | default(_def_crt_remote_public_key_owner) }}'
+_crt_remote_public_key_group: '{{ crt_remote_public_key_group | default(_def_crt_remote_public_key_group) }}'
+_crt_remote_public_key_mode: '{{ crt_remote_public_key_mode | default(_def_crt_remote_public_key_mode) }}'
+
+# public key directory
+_crt_remote_public_key_dir_owner: >-
+  {{
+    crt_remote_public_key_dir_owner | default(_def_crt_remote_public_key_dir_owner)
+  }}
+_crt_remote_public_key_dir_group: >-
+  {{
+    crt_remote_public_key_dir_group | default(_def_crt_remote_public_key_dir_group)
+  }}
+_crt_remote_public_key_dir_mode: '{{ crt_remote_public_key_dir_mode | default(_def_crt_remote_public_key_dir_mode) }}'
+
+# certificate authority public key
+_crt_remote_ca_public_key_path: '{{ crt_remote_ca_public_key_path | default(_def_crt_remote_ca_public_key_path) }}'
+_crt_remote_ca_public_key_owner: '{{ crt_remote_ca_public_key_owner | default(_def_crt_remote_ca_public_key_owner) }}'
+_crt_remote_ca_public_key_group: '{{ crt_remote_ca_public_key_group | default(_def_crt_remote_ca_public_key_group) }}'
+_crt_remote_ca_public_key_mode: '{{ crt_remote_ca_public_key_mode | default(_def_crt_remote_ca_public_key_mode) }}'
+
+# certificate authority public key directory
+_crt_remote_ca_public_key_dir_owner: >-
+  {{
+    crt_remote_ca_public_key_dir_owner | default(_def_crt_remote_ca_public_key_dir_owner)
+  }}
+_crt_remote_ca_public_key_dir_group: >-
+  {{
+    crt_remote_ca_public_key_dir_group | default(_def_crt_remote_ca_public_key_dir_group)
+  }}
+_crt_remote_ca_public_key_dir_mode: >-
+  {{
+    crt_remote_ca_public_key_dir_mode | default(_def_crt_remote_ca_public_key_dir_mode)
+  }}
+
+# certificate authority CRL
+_crt_remote_ca_crl_path: '{{ crt_remote_ca_crl_path | default(_def_crt_remote_ca_crl_path) }}'
+_crt_remote_ca_crl_owner: '{{ crt_remote_ca_crl_owner | default(_def_crt_remote_ca_crl_owner) }}'
+_crt_remote_ca_crl_group: '{{ crt_remote_ca_crl_group | default(_def_crt_remote_ca_crl_group) }}'
+_crt_remote_ca_crl_mode: '{{ crt_remote_ca_crl_mode | default(_def_crt_remote_ca_crl_mode) }}'
+
+# certificate authority CRL directory
+_crt_remote_ca_crl_dir_owner: '{{ crt_remote_ca_crl_dir_owner | default(_def_crt_remote_ca_crl_dir_owner) }}'
+_crt_remote_ca_crl_dir_group: '{{ crt_remote_ca_crl_dir_group | default(_def_crt_remote_ca_crl_dir_group) }}'
+_crt_remote_ca_crl_dir_mode: '{{ crt_remote_ca_crl_dir_mode | default(_def_crt_remote_ca_crl_dir_mode) }}'
+...

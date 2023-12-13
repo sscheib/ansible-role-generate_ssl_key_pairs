@@ -1,0 +1,108 @@
+---
+- name: >-
+    transfer_certs | Ensure private key destination directory exists: {{ _crt_remote_private_key_path | dirname }}
+  ansible.builtin.file:
+    path: '{{ _crt_remote_private_key_path | dirname }}'
+    state: 'directory'
+    owner: '{{ _crt_remote_private_key_dir_owner }}'
+    group: '{{ _crt_remote_private_key_dir_group }}'
+    mode: '{{ _crt_remote_private_key_dir_mode }}'
+  become: true
+
+- name: 'transfer_certs | Copy certificate private key to {{ _crt_remote_private_key_path }}'
+  ansible.builtin.copy:
+    src: '{{ _crt_local_dest_path }}/{{ inventory_hostname }}/{{ _crt_priv_key_path | basename }}'
+    dest: '{{ _crt_remote_private_key_path }}'
+    owner: '{{ _crt_remote_private_key_owner }}'
+    group: '{{ _crt_remote_private_key_group }}'
+    mode: '{{ _crt_remote_private_key_mode }}'
+  become: true
+
+- name: >-
+    transfer_certs | Ensure public key destination directory exists: {{ _crt_remote_public_key_path | dirname }}
+  ansible.builtin.file:
+    path: '{{ _crt_remote_public_key_path | dirname }}'
+    state: 'directory'
+    owner: '{{ _crt_remote_public_key_dir_owner }}'
+    group: '{{ _crt_remote_public_key_dir_group }}'
+    mode: '{{ _crt_remote_public_key_dir_mode }}'
+  become: true
+
+- name: 'transfer_certs | Copy certificate private key to {{ _crt_remote_public_key_path }}'
+  ansible.builtin.copy:
+    src: '{{ _crt_local_dest_path }}/{{ inventory_hostname }}/{{ _crt_priv_key_path | basename }}'
+    dest: '{{ _crt_remote_public_key_path }}'
+    owner: '{{ _crt_remote_public_key_owner }}'
+    group: '{{ _crt_remote_public_key_group }}'
+    mode: '{{ _crt_remote_public_key_mode }}'
+  become: true
+
+- name: 'transfer_certs | Handle transferring of CA certificate'
+  become: true
+  when: >
+    _crt_ca_fetch_ca_cert is defined
+    and _crt_ca_fetch_ca_cert
+  block:
+
+    - name: >-
+        transfer_certs | Ensure CA public key destination directory exists:
+        {{ _crt_remote_ca_public_key_path | dirname }}
+      ansible.builtin.file:
+        path: '{{ _crt_remote_ca_public_key_path | dirname }}'
+        state: 'directory'
+        owner: '{{ _crt_remote_ca_public_key_dir_owner }}'
+        group: '{{ _crt_remote_ca_public_key_dir_group }}'
+        mode: '{{ _crt_remote_ca_public_key_dir_mode }}'
+
+    - name: 'transfer_certs | Copy CA certificate public key to {{ _crt_remote_ca_public_key_path }}'
+      ansible.builtin.copy:
+        src: '{{ _crt_local_dest_path }}/{{ inventory_hostname }}/{{ _crt_ca_cert_path | basename }}'
+        dest: '{{ _crt_remote_ca_public_key_path }}'
+        owner: '{{ _crt_remote_ca_public_key_owner }}'
+        group: '{{ _crt_remote_ca_public_key_group }}'
+        mode: '{{ _crt_remote_ca_public_key_mode }}'
+
+- name: 'transfer_certs | Handle transferring of CA CRL certificates'
+  become: true
+  when: >
+    _crt_ca_fetch_ca_crl_cert is defined
+    and _crt_ca_fetch_ca_crl_cert
+    and _crt_ca_crl_certs is defined
+    and _crt_ca_crl_certs | length > 0
+  block:
+
+    - name: >-
+        transfer_certs | Ensure CA CRL certificate destination directory exists:
+        {{ _crt_remote_ca_crl_path | dirname }}
+      ansible.builtin.file:
+        path: '{{ _crt_remote_ca_crl_path | dirname }}'
+        state: 'directory'
+        owner: '{{ _crt_remote_ca_crl_dir_owner }}'
+        group: '{{ _crt_remote_ca_crl_dir_group }}'
+        mode: '{{ _crt_remote_ca_crl_dir_mode }}'
+
+    - name: 'transfer_certs | Copy CA CRL certificates to {{ _crt_remote_ca_crl_path | dirname }}'
+      ansible.builtin.copy:
+        src: '{{ _crt_local_dest_path }}/{{ inventory_hostname }}/crl/{{ __t_crl_cert | basename }}'
+        dest: '{{ _crt_remote_ca_crl_path | dirname }}'
+        owner: '{{ _crt_remote_ca_crl_owner }}'
+        group: '{{ _crt_remote_ca_crl_group }}'
+        mode: '{{ _crt_remote_ca_crl_mode }}'
+      loop: '{{ _crt_ca_crl_certs }}'
+      loop_control:
+        loop_var: '__t_crl_cert'
+      when: >
+        _crt_combine_ca_crl_certs is not defined
+        or not _crt_combine_ca_crl_certs
+
+    - name: 'transfer_certs | Copy combined CA CRL certificate to {{ _crt_remote_ca_crl_path }}'
+      ansible.builtin.copy:
+        src: '{{ _crt_local_dest_path }}/{{ inventory_hostname }}/{{ _crt_crl_dest_name }}'
+        dest: '{{ _crt_remote_ca_crl_path }}'
+        owner: '{{ _crt_remote_ca_crl_owner }}'
+        group: '{{ _crt_remote_ca_crl_group }}'
+        mode: '{{ _crt_remote_ca_crl_mode }}'
+      when: >
+        _crt_combine_ca_crl_certs is defined
+        and _crt_combine_ca_crl_certs
+...

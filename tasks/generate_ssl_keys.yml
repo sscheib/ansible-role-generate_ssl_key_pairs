@@ -1,0 +1,73 @@
+---
+- name: 'generate_ssl_keys | Set facts for generating the OpenSSL key pair'
+  ansible.builtin.set_fact:
+    _crt_priv_key_path: '{{ _crt_ca_priv_key_dir_path }}/{{ _crt_cert_fqdn }}.{{ _crt_priv_key_suffix }}'
+    _crt_cert_path: '{{ _crt_ca_cert_dir_path }}/{{ _crt_cert_fqdn }}.{{ _crt_cert_suffix }}'
+    _crt_csr_path: '{{ _crt_ca_csr_dir_path }}/{{ _crt_cert_fqdn }}.{{ _crt_csr_suffix }}'
+
+- name: 'generate_ssl_keys | Run SSL key generation and signing with elevated privilges on {{ _pki_host }}'
+  delegate_to: '{{ _crt_pki_host }}'
+  remote_user: '{{ _crt_pki_host_remote_user }}'
+  become: true
+  vars:
+    ansible_ssh_port: '{{ _crt_pki_host_remote_port }}'
+  block:
+
+    - name: 'generate_ssl_keys | Generate private key for {{ _crt_cert_fqdn }}'
+      community.crypto.openssl_privatekey:
+        path: '{{ _crt_priv_key_path }}'
+        type: '{{ _crt_priv_key_type }}'
+        size: '{{ _crt_priv_key_size }}'
+        force: '{{ _crt_force_priv_key_generation }}'
+
+    - name: 'generate_ssl_keys | Generate certificate signing request for {{ _crt_cert_fqdn }}'
+      community.crypto.openssl_csr:
+        path: '{{ _crt_csr_path }}'
+        privatekey_path: '{{ _crt_priv_key_path }}'
+        common_name: '{{ _crt_csr_common_name }}'
+        email_address: '{{ _crt_csr_email }}'
+        organization_name: '{{ _crt_csr_org }}'
+        country_name: '{{ _crt_csr_country }}'
+        organizational_unit_name: '{{ _crt_csr_org_unit }}'
+        state_or_province_name: '{{ _crt_csr_state }}'
+        locality_name: '{{ _crt_csr_loc }}'
+        key_usage: '{{ crt_csr_key_usage | default(omit) }}'
+        key_usage_critical: true
+        extended_key_usage: '{{ _crt_csr_extended_key_usage }}'
+
+    - name: 'generate_ssl_keys | Sign the CSR for {{ _crt_cert_fqdn }}'
+      community.crypto.x509_certificate:
+        path: '{{ _crt_cert_path }}'
+        csr_path: '{{ _crt_csr_path }}'
+        privatekey_path: '{{ _crt_priv_key_path }}'
+        ownca_path: '{{ _crt_ca_cert_path }}'
+        ownca_privatekey_path: '{{ _crt_ca_priv_key_path }}'
+        ownca_privatekey_passphrase: '{{ _crt_ca_priv_key_pass }}'
+        provider: 'ownca'
+
+    - name: 'generate_ssl_keys | Fetch generated private and public key for {{ _crt_cert_fqdn }}'
+      ansible.builtin.fetch:
+        src: '{{ _cert }}'
+        dest: '{{ _crt_local_dest_path }}/{{ inventory_hostname }}/'
+        fail_on_missing: true
+        validate_checksum: true
+        flat: true
+      loop:
+        - '{{ _crt_priv_key_path }}'
+        - '{{ _crt_cert_path }}'
+      loop_control:
+        loop_var: '_cert'
+
+    - name: 'generate_ssl_keys | Ensure fetched private and public key have the correct permissions applied'
+      ansible.builtin.file:
+        path: '{{ _crt_local_dest_path }}/{{ inventory_hostname }}/{{ _cert | basename }}'
+        owner: '{{ _crt_local_dest_path_owner }}'
+        group: '{{ _crt_local_dest_path_group }}'
+        mode: '{{ _crt_local_dest_path_mode }}'
+      delegate_to: 'localhost'
+      loop:
+        - '{{ _crt_priv_key_path }}'
+        - '{{ _crt_cert_path }}'
+      loop_control:
+        loop_var: '_cert'
+...

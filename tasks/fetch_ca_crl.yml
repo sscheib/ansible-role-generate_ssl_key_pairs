@@ -1,0 +1,94 @@
+---
+- name: 'fetch_ca_crl | Fetch CA and CRL certs'
+  delegate_to: '{{ _crt_pki_host }}'
+  remote_user: '{{ _crt_pki_host_remote_user }}'
+  become: true
+  vars:
+    ansible_ssh_port: '{{ _crt_pki_host_remote_port }}'
+  block:
+
+    - name: 'fetch_ca_crl | Handle fetching of CA certificate'
+      when: >
+        _crt_ca_fetch_ca_cert is defined
+        and _crt_ca_fetch_ca_cert
+      block:
+
+        - name: 'fetch_ca_crl | Fetch CA certificate'
+          ansible.builtin.fetch:
+            src: '{{ _crt_ca_cert_path }}'
+            dest: '{{ _crt_local_dest_path }}/{{ inventory_hostname }}/'
+            fail_on_missing: true
+            validate_checksum: true
+            flat: true
+
+        - name: 'fetch_ca_crl | Ensure CA certificate has the correct permissions applied'
+          ansible.builtin.file:
+            path: '{{ _crt_local_dest_path }}/{{ inventory_hostname }}/{{ _crt_ca_cert_path | basename }}'
+            owner: '{{ _crt_local_dest_path_owner }}'
+            group: '{{ _crt_local_dest_path_group }}'
+            mode: '{{ _crt_local_dest_path_mode }}'
+          delegate_to: 'localhost'
+
+    - name: 'fetch_ca_crl | Handle fetching of CA chain certificate'
+      when: >
+        _crt_ca_fetch_ca_chain_cert is defined
+        and _crt_ca_fetch_ca_chain_cert
+      block:
+
+        - name: 'fetch_ca_crl | Fetch CA chain certificate'
+          ansible.builtin.fetch:
+            src: '{{ _crt_ca_chain_cert_path }}'
+            dest: '{{ _crt_local_dest_path }}/{{ inventory_hostname }}/'
+            fail_on_missing: true
+            validate_checksum: true
+            flat: true
+
+        - name: 'fetch_ca_crl | Ensure CA chain certificate has the correct permissions applied'
+          ansible.builtin.file:
+            path: '{{ _crt_local_dest_path }}/{{ inventory_hostname }}/{{ _crt_ca_chain_cert_path | basename }}'
+            owner: '{{ _crt_local_dest_path_owner }}'
+            group: '{{ _crt_local_dest_path_group }}'
+            mode: '{{ _crt_local_dest_path_mode }}'
+          delegate_to: 'localhost'
+
+    - name: 'fetch_ca_crl | Handle fetching of CRL certificates'
+      when: >
+        _crt_ca_fetch_ca_crl_cert is defined
+        and _crt_ca_fetch_ca_crl_cert
+      block:
+
+        - name: 'fetch_ca_crl | Fetch CRL certificates'
+          ansible.builtin.fetch:
+            src: '{{ _cert }}'
+            dest: '{{ _crt_local_dest_path }}/{{ inventory_hostname }}/crl/'
+            fail_on_missing: true
+            validate_checksum: true
+            flat: true
+          loop: '{{ _crt_ca_crl_certs }}'
+          loop_control:
+            loop_var: '_cert'
+
+        - name: 'fetch_ca_crl | Ensure CA CRL certificates have the correct permissions applied'
+          ansible.builtin.file:
+            path: '{{ _crt_local_dest_path }}/{{ inventory_hostname }}/crl/{{ _cert | basename }}'
+            owner: '{{ _crt_local_dest_path_owner }}'
+            group: '{{ _crt_local_dest_path_group }}'
+            mode: '{{ _crt_local_dest_path_mode }}'
+          delegate_to: 'localhost'
+          loop: '{{ _crt_ca_crl_certs }}'
+          loop_control:
+            loop_var: '_cert'
+
+- name: 'fetch_ca_crl | Combine CRL certificates'
+  ansible.builtin.assemble:
+    src: '{{ _crt_local_dest_path }}/{{ inventory_hostname }}/crl/'
+    dest: '{{ _crt_local_dest_path }}/{{ inventory_hostname }}/{{ _crt_crl_dest_name }}'
+    owner: '{{ _crt_local_dest_path_owner }}'
+    group: '{{ _crt_local_dest_path_group }}'
+    mode: '{{ _crt_local_dest_path_mode }}'
+  become: true
+  delegate_to: 'localhost'
+  when: >
+    _crt_combine_ca_crl_certs is defined
+    and _crt_combine_ca_crl_certs
+...

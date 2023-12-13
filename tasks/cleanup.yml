@@ -1,0 +1,8 @@
+---
+- name: 'cleanup | Ensure locally stored files are removed'
+  ansible.builtin.file:
+    state: 'absent'
+    path: '{{ _crt_local_dest_path }}'
+  delegate_to: 'localhost'
+  become: true
+...

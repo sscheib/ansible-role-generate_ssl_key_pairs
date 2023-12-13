@@ -1,0 +1,5 @@
+---
+# required packages on the PKI host
+_crt_required_packages:
+  - 'python3-pyOpenSSL'
+...
