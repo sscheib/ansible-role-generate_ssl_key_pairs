@@ -1,4 +1,4 @@
-Role Name
+generate_ssl_key_pairs
 =========
 
 Generates SSL certificates on a PKI host and transfers the generated public and private key to the Ansible managed nodes. Optionally, the certificate authoritie's
