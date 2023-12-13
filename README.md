@@ -9,7 +9,7 @@ certificate/s can be transferred as well as the optional Certificate Revocation 
 Requirements
 ------------
 
-This role requires a fully-setup Private Key Infrastructure (PKI).
+This role requires a fully-setup Public Key Infrastructure (PKI).
 
 Role Variables
 --------------
