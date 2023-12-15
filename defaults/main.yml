@@ -173,6 +173,17 @@ _def_crt_remote_ca_public_key_dir_owner: 'root'
 _def_crt_remote_ca_public_key_dir_group: 'root'
 _def_crt_remote_ca_public_key_dir_mode: '0700'
 
+# certificate authority chain certificate
+_def_crt_remote_ca_chain_cert_path: '/root/certs/ca-chain.{{ _def_crt_cert_suffix }}'
+_def_crt_remote_ca_chain_cert_owner: 'root'
+_def_crt_remote_ca_chain_cert_group: 'root'
+_def_crt_remote_ca_chain_cert_mode: '0400'
+
+# certificate authority chain certificate directory
+_def_crt_remote_ca_chain_cert_dir_owner: 'root'
+_def_crt_remote_ca_chain_cert_dir_group: 'root'
+_def_crt_remote_ca_chain_cert_dir_mode: '0700'
+
 # certificate authority CRL
 _def_crt_remote_ca_crl_path: '/root/certs/ca.{{ _def_crt_crl_suffix }}'
 _def_crt_remote_ca_crl_owner: 'root'

@@ -53,10 +53,10 @@ This does **not** affect users including the role with variables defined via `ex
 #### Variable to default variable
 | variable                                                    | default variable                                                                                          |
 | :---------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------- |
-| `crt_priv_key_suffix`                                       | `_def_crt_priv_key_suffix`                                                                                | 
-| `crt_cert_suffix`                                           | `_def_crt_cert_suffix`                                                                                    | 
-| `crt_csr_suffix`                                            | `_def_crt_csr_suffix`                                                                                     | 
-| `crt_crl_suffix`                                            | `_def_crt_crl_suffix`                                                                                     | 
+| `crt_priv_key_suffix`                                       | `_def_crt_priv_key_suffix`                                                                                |
+| `crt_cert_suffix`                                           | `_def_crt_cert_suffix`                                                                                    |
+| `crt_csr_suffix`                                            | `_def_crt_csr_suffix`                                                                                     |
+| `crt_crl_suffix`                                            | `_def_crt_crl_suffix`                                                                                     |
 
 #### Default variable to default value and requirement
 | default variable                                            | default value                                                                                  | required |
@@ -87,18 +87,18 @@ This does **not** affect users including the role with variables defined via `ex
 #### Variable to default variable
 | variable                                                    | default variable                                                                                          |
 | :---------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------- |
-| `crt_ca_root_dir`                                           | `_def_crt_ca_root_dir`                                                                                    | 
-| `crt_ca_cert_name`                                          | `_def_crt_ca_cert_name`                                                                                   | 
-| `crt_ca_chain_cert_name`                                    | `_def_crt_ca_chain_cert_name`                                                                             | 
-| `crt_ca_priv_key_name`                                      | `_def_crt_ca_priv_key_name`                                                                               | 
-| `crt_ca_priv_key_dir_path`                                  | `_def_crt_ca_priv_key_dir_path`                                                                           | 
-| `crt_ca_cert_dir_path`                                      | `_def_crt_ca_cert_dir_path`                                                                               | 
-| `crt_ca_csr_dir_path`                                       | `_def_crt_ca_csr_dir_path`                                                                                | 
-| `crt_ca_cert_path`                                          | `_def_crt_ca_cert_path`                                                                                   | 
-| `crt_ca_chain_cert_path`                                    | `_def_crt_ca_chain_cert_path`                                                                             | 
-| `crt_ca_priv_key_path`                                      | `_def_crt_ca_priv_key_path`                                                                               | 
-| `crt_ca_fetch_ca_cert`                                      | `_def_crt_ca_fetch_ca_cert`                                                                               | 
-| `crt_ca_fetch_ca_chain_cert`                                | `_def_crt_ca_fetch_ca_chain_cert`                                                                         | 
+| `crt_ca_root_dir`                                           | `_def_crt_ca_root_dir`                                                                                    |
+| `crt_ca_cert_name`                                          | `_def_crt_ca_cert_name`                                                                                   |
+| `crt_ca_chain_cert_name`                                    | `_def_crt_ca_chain_cert_name`                                                                             |
+| `crt_ca_priv_key_name`                                      | `_def_crt_ca_priv_key_name`                                                                               |
+| `crt_ca_priv_key_dir_path`                                  | `_def_crt_ca_priv_key_dir_path`                                                                           |
+| `crt_ca_cert_dir_path`                                      | `_def_crt_ca_cert_dir_path`                                                                               |
+| `crt_ca_csr_dir_path`                                       | `_def_crt_ca_csr_dir_path`                                                                                |
+| `crt_ca_cert_path`                                          | `_def_crt_ca_cert_path`                                                                                   |
+| `crt_ca_chain_cert_path`                                    | `_def_crt_ca_chain_cert_path`                                                                             |
+| `crt_ca_priv_key_path`                                      | `_def_crt_ca_priv_key_path`                                                                               |
+| `crt_ca_fetch_ca_cert`                                      | `_def_crt_ca_fetch_ca_cert`                                                                               |
+| `crt_ca_fetch_ca_chain_cert`                                | `_def_crt_ca_fetch_ca_chain_cert`                                                                         |
 
 #### Default variable to default value and requirement
 | default variable                                            | default value                                                                                  | required |
@@ -133,14 +133,14 @@ This does **not** affect users including the role with variables defined via `ex
 #### Variable to default variable
 | variable                                                    | default variable                                                                                          |
 | :---------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------- |
-| `crt_csr_email`                                             | `_def_crt_csr_email`                                                                                      | 
-| `crt_csr_org`                                               | `_def_crt_csr_org`                                                                                        | 
-| `crt_csr_org_unit`                                          | `_def_crt_csr_org_unit`                                                                                   | 
-| `crt_csr_country`                                           | `_def_crt_csr_country`                                                                                    | 
-| `crt_csr_state`                                             | `_def_crt_csr_state`                                                                                      | 
-| `crt_csr_loc`                                               | `_def_crt_csr_loc`                                                                                        | 
-| `crt_csr_key_usage`                                         | `_def_crt_csr_key_usage`                                                                                  | 
-| `crt_csr_extended_key_usage`                                | `_def_crt_csr_extended_key_usage`                                                                         | 
+| `crt_csr_email`                                             | `_def_crt_csr_email`                                                                                      |
+| `crt_csr_org`                                               | `_def_crt_csr_org`                                                                                        |
+| `crt_csr_org_unit`                                          | `_def_crt_csr_org_unit`                                                                                   |
+| `crt_csr_country`                                           | `_def_crt_csr_country`                                                                                    |
+| `crt_csr_state`                                             | `_def_crt_csr_state`                                                                                      |
+| `crt_csr_loc`                                               | `_def_crt_csr_loc`                                                                                        |
+| `crt_csr_key_usage`                                         | `_def_crt_csr_key_usage`                                                                                  |
+| `crt_csr_extended_key_usage`                                | `_def_crt_csr_extended_key_usage`                                                                         |
 
 #### Default variable to default value and requirement
 | default variable                                            | default value                                                                                  | required |
@@ -167,9 +167,9 @@ This does **not** affect users including the role with variables defined via `ex
 #### Variable to default variable
 | variable                                                    | default variable                                                                                          |
 | :---------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------- |
-| `crt_ca_fetch_ca_crl_cert`                                  | `_def_crt_ca_fetch_ca_crl_cert`                                                                           | 
-| `crt_combine_ca_crl_certs`                                  | `_def_crt_combine_ca_crl_certs`                                                                           | 
-| `crt_crl_dest_name`                                         | `_def_crt_crl_dest_name`                                                                                  | 
+| `crt_ca_fetch_ca_crl_cert`                                  | `_def_crt_ca_fetch_ca_crl_cert`                                                                           |
+| `crt_combine_ca_crl_certs`                                  | `_def_crt_combine_ca_crl_certs`                                                                           |
+| `crt_crl_dest_name`                                         | `_def_crt_crl_dest_name`                                                                                  |
 
 #### Default variable to default value and requirement
 | default variable                                            | default value                                                                                  | required |
@@ -190,9 +190,9 @@ This does **not** affect users including the role with variables defined via `ex
 #### Variable to default variable
 | variable                                                    | default variable                                                                                          |
 | :---------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------- |
-| `crt_priv_key_type`                                         | `_def_crt_priv_key_type`                                                                                  | 
-| `crt_priv_key_size`                                         | `_def_crt_priv_key_size`                                                                                  | 
-| `crt_force_priv_key_generation`                             | `_def_crt_force_priv_key_generation`                                                                      | 
+| `crt_priv_key_type`                                         | `_def_crt_priv_key_type`                                                                                  |
+| `crt_priv_key_size`                                         | `_def_crt_priv_key_size`                                                                                  |
+| `crt_force_priv_key_generation`                             | `_def_crt_force_priv_key_generation`                                                                      |
 
 #### Default variable to default value and requirement
 | default variable                                            | default value                                                                                  | required |
@@ -216,12 +216,12 @@ This does **not** affect users including the role with variables defined via `ex
 #### Variable to default variable
 | variable                                                    | default variable                                                                                          |
 | :---------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------- |
-| `crt_local_dest_path`                                       | `_def_crt_local_dest_path`                                                                                | 
-| `crt_local_dest_path_owner`                                 | `_def_crt_local_dest_path_owner`                                                                          | 
-| `crt_local_dest_path_group`                                 | `_def_crt_local_dest_path_group`                                                                          | 
-| `crt_local_dest_path_mode`                                  | `_def_crt_local_dest_path_mode`                                                                           | 
-| `crt_quiet_assert`                                          | `_def_crt_quiet_assert`                                                                                   | 
-| `crt_remove_temporary_local_certificates`                   | `_def_crt_remove_temporary_local_certificates`                                                            | 
+| `crt_local_dest_path`                                       | `_def_crt_local_dest_path`                                                                                |
+| `crt_local_dest_path_owner`                                 | `_def_crt_local_dest_path_owner`                                                                          |
+| `crt_local_dest_path_group`                                 | `_def_crt_local_dest_path_group`                                                                          |
+| `crt_local_dest_path_mode`                                  | `_def_crt_local_dest_path_mode`                                                                           |
+| `crt_quiet_assert`                                          | `_def_crt_quiet_assert`                                                                                   |
+| `crt_remove_temporary_local_certificates`                   | `_def_crt_remove_temporary_local_certificates`                                                            |
 
 #### Default variable to default value and requirement
 | default variable                                            | default value                                                                                  | required |
@@ -243,7 +243,7 @@ This does **not** affect users including the role with variables defined via `ex
 #### Variable to default variable
 | variable                                                    | default variable                                                                                          |
 | :---------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------- |
-| `crt_pki_host_remote_port`                                  | `_def_crt_pki_host_remote_port`                                                                           | 
+| `crt_pki_host_remote_port`                                  | `_def_crt_pki_host_remote_port`                                                                           |
 
 #### Default variable to default value and requirement
 | default variable                                            | default value                                                                                  | required |
@@ -276,6 +276,13 @@ This does **not** affect users including the role with variables defined via `ex
 | `crt_remote_ca_public_key_dir_owner`                        | Owner of parent directory of `crt_remote_ca_public_key_path`                                              |
 | `crt_remote_ca_public_key_dir_group`                        | Group of parent directory of `crt_remote_ca_public_key_path`                                              |
 | `crt_remote_ca_public_key_dir_mode`                         | Mode of parent directory of `crt_remote_ca_public_key_path`                                               |
+| `crt_remote_ca_chain_cert_path`                             | Where to copy the CA chain cert to on the managed node                                                    |
+| `crt_remote_ca_chain_cert_owner`                            | Owner of `crt_remote_ca_chain_cert_path`                                                                  |
+| `crt_remote_ca_chain_cert_group`                            | Group of `crt_remote_ca_chain_cert_path`                                                                  |
+| `crt_remote_ca_chain_cert_mode`                             | Mode of `crt_remote_ca_chain_cert_path`                                                                   |
+| `crt_remote_ca_chain_cert_dir_owner`                        | Owner of parent directory of `crt_remote_ca_chain_cert_path`                                              |
+| `crt_remote_ca_chain_cert_dir_group`                        | Group of parent directory of `crt_remote_ca_chain_cert_path`                                              |
+| `crt_remote_ca_chain_cert_dir_mode`                         | Mode of parent directory of `crt_remote_ca_chain_cert_path`                                               |
 | `crt_remote_ca_crl_path`                                    | Where to copy the combined CRL certificate to on the managed node                                         |
 | `crt_remote_ca_crl_owner`                                   | Owner of `crt_remote_ca_crl_path`                                                                         |
 | `crt_remote_ca_crl_group`                                   | Group of `crt_remote_ca_crl_path`                                                                         |
@@ -287,30 +294,37 @@ This does **not** affect users including the role with variables defined via `ex
 #### Variable to default variable
 | variable                                                    | default variable                                                                                          |
 | :---------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------- |
-| `crt_remote_private_key_path`                               | `_def_crt_remote_private_key_path`                                                                        | 
-| `crt_remote_private_key_owner`                              | `_def_crt_remote_private_key_owner`                                                                       | 
-| `crt_remote_private_key_group`                              | `_def_crt_remote_private_key_group`                                                                       | 
+| `crt_remote_private_key_path`                               | `_def_crt_remote_private_key_path`                                                                        |
+| `crt_remote_private_key_owner`                              | `_def_crt_remote_private_key_owner`                                                                       |
+| `crt_remote_private_key_group`                              | `_def_crt_remote_private_key_group`                                                                       |
 | `crt_remote_private_key_mode`                               | `_def_crt_remote_private_key_mode`                                                                        |
 | `crt_remote_private_key_dir_owner`                          | `_def_crt_remote_private_key_dir_owner`                                                                   |
 | `crt_remote_private_key_dir_group`                          | `_def_crt_remote_private_key_dir_group`                                                                   |
 | `crt_remote_private_key_dir_mode`                           | `_def_crt_remote_private_key_dir_mode`                                                                    |
-| `crt_remote_public_key_path`                                | `_def_crt_remote_public_key_path`                                                                         | 
-| `crt_remote_public_key_owner`                               | `_def_crt_remote_public_key_owner`                                                                        | 
-| `crt_remote_public_key_group`                               | `_def_crt_remote_public_key_group`                                                                        | 
+| `crt_remote_public_key_path`                                | `_def_crt_remote_public_key_path`                                                                         |
+| `crt_remote_public_key_owner`                               | `_def_crt_remote_public_key_owner`                                                                        |
+| `crt_remote_public_key_group`                               | `_def_crt_remote_public_key_group`                                                                        |
 | `crt_remote_public_key_mode`                                | `_def_crt_remote_public_key_mode`                                                                         |
 | `crt_remote_public_key_dir_owner`                           | `_def_crt_remote_public_key_dir_owner`                                                                    |
 | `crt_remote_public_key_dir_group`                           | `_def_crt_remote_public_key_dir_group`                                                                    |
 | `crt_remote_public_key_dir_mode`                            | `_def_crt_remote_public_key_dir_mode`                                                                     |
-| `crt_remote_ca_public_key_path`                             | `_def_crt_remote_ca_public_key_path`                                                                      | 
-| `crt_remote_ca_public_key_owner`                            | `_def_crt_remote_ca_public_key_owner`                                                                     | 
-| `crt_remote_ca_public_key_group`                            | `_def_crt_remote_ca_public_key_group`                                                                     | 
+| `crt_remote_ca_public_key_path`                             | `_def_crt_remote_ca_public_key_path`                                                                      |
+| `crt_remote_ca_public_key_owner`                            | `_def_crt_remote_ca_public_key_owner`                                                                     |
+| `crt_remote_ca_public_key_group`                            | `_def_crt_remote_ca_public_key_group`                                                                     |
 | `crt_remote_ca_public_key_mode`                             | `_def_crt_remote_ca_public_key_mode`                                                                      |
 | `crt_remote_ca_public_key_dir_owner`                        | `_def_crt_remote_ca_public_key_dir_owner`                                                                 |
 | `crt_remote_ca_public_key_dir_group`                        | `_def_crt_remote_ca_public_key_dir_group`                                                                 |
 | `crt_remote_ca_public_key_dir_mode`                         | `_def_crt_remote_ca_public_key_dir_mode`                                                                  |
-| `crt_remote_ca_crl_path`                                    | `_def_crt_remote_ca_crl_path`                                                                             | 
-| `crt_remote_ca_crl_owner`                                   | `_def_crt_remote_ca_crl_owner`                                                                            | 
-| `crt_remote_ca_crl_group`                                   | `_def_crt_remote_ca_crl_group`                                                                            | 
+| `crt_remote_ca_chain_cert_path`                             | `_def_crt_remote_ca_chain_cert_path`                                                                      |
+| `crt_remote_ca_chain_cert_owner`                            | `_def_crt_remote_ca_chain_cert_owner`                                                                     |
+| `crt_remote_ca_chain_cert_group`                            | `_def_crt_remote_ca_chain_cert_group`                                                                     |
+| `crt_remote_ca_chain_cert_mode`                             | `_def_crt_remote_ca_chain_cert_mode`                                                                      |
+| `crt_remote_ca_chain_cert_dir_owner`                        | `_def_crt_remote_ca_chain_cert_dir_owner`                                                                 |
+| `crt_remote_ca_chain_cert_dir_group`                        | `_def_crt_remote_ca_chain_cert_dir_group`                                                                 |
+| `crt_remote_ca_chain_cert_dir_mode`                         | `_def_crt_remote_ca_chain_cert_dir_mode`                                                                  |
+| `crt_remote_ca_crl_path`                                    | `_def_crt_remote_ca_crl_path`                                                                             |
+| `crt_remote_ca_crl_owner`                                   | `_def_crt_remote_ca_crl_owner`                                                                            |
+| `crt_remote_ca_crl_group`                                   | `_def_crt_remote_ca_crl_group`                                                                            |
 | `crt_remote_ca_crl_mode`                                    | `_def_crt_remote_ca_crl_mode`                                                                             |
 | `crt_remote_ca_crl_dir_owner`                               | `_def_crt_remote_ca_crl_dir_owner`                                                                        |
 | `crt_remote_ca_crl_dir_group`                               | `_def_crt_remote_ca_crl_dir_group`                                                                        |
@@ -340,6 +354,13 @@ This does **not** affect users including the role with variables defined via `ex
 | `_def_crt_remote_ca_public_key_dir_owner`                   | `root`                                                                                         | false    |
 | `_def_crt_remote_ca_public_key_dir_group`                   | `root`                                                                                         | false    |
 | `_def_crt_remote_ca_public_key_dir_mode`                    | `0700`                                                                                         | false    |
+| `_def_crt_remote_ca_chain_cert_path`                        | `/root/certs/ca-chain.{{ _def_crt_cert_suffix }}`                                              | false    |
+| `_def_crt_remote_ca_chain_cert_owner`                       | `root`                                                                                         | false    |
+| `_def_crt_remote_ca_chain_cert_group`                       | `root`                                                                                         | false    |
+| `_def_crt_remote_ca_chain_cert_mode`                        | `0400`                                                                                         | false    |
+| `_def_crt_remote_ca_chain_cert_dir_owner`                   | `root`                                                                                         | false    |
+| `_def_crt_remote_ca_chain_cert_dir_group`                   | `root`                                                                                         | false    |
+| `_def_crt_remote_ca_chain_cert_dir_mode`                    | `0700`                                                                                         | false    |
 | `_def_crt_remote_ca_crl_path`                               | `/root/certs/crl.{{ _def_crt_crl_suffix }}`                                                    | false    |
 | `_def_crt_remote_ca_crl_owner`                              | `root`                                                                                         | false    |
 | `_def_crt_remote_ca_crl_group`                              | `root`                                                                                         | false    |
