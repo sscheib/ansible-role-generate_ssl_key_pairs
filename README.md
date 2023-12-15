@@ -14,6 +14,21 @@ This role requires a fully-setup Public Key Infrastructure (PKI).
 Role Variables
 --------------
 
+# A note on templating connection variables
+
+This role works with delegations (`delegate_to`). The SSL key pair generation runs on the host defined in `crt_pki_host`, so all tasks related to key generation will run on
+`crt_pki_host`. Ansible, however, will try to lookup **templated connection variables** (such as `remote_user`) from the host we are delegating to (in this 
+case `crt_pki_host`) since Ansible 2.9.10.
+There is a [lengthy discussion on Ansible's GitHub ](https://github.com/ansible/ansible/issues/72776) that discusses this in more detail if you'd like to learn more about it.
+
+What I'd like to point out is, if you make use of `host_vars` or `group_vars`, please make sure to define the connection variables (`crt_pki_host`, `crt_pki_host_remote_user`
+and `crt_pki_host_remote_port`) in the `host_vars` of the host defined in `crt_pki_host` or the corresponding `group_vars`.
+Of course, you can also define them in either `host_vars/all` or `group_vars/all` (as usual with Ansible).
+
+Defining them in the `inventory_hostname` context will **not work**!
+
+This does **not** affect users including the role with variables defined via `extra_vars`, on Play or on Task level, as these variables are valid in **every** host context.
+
 ## Mandatory variables
 
 | variable                                     | default                               | required | description                                                           |
@@ -22,6 +37,7 @@ Role Variables
 | `crt_ca_priv_key_pass`                       | unset                                 | true     | Passphrase for the certificate authority (CA) private key             |
 | `crt_pki_host`                               | unset                                 | true     | PKI host - this is where the key generation will happen               |
 | `crt_pki_host_remote_user`                   | unset                                 | true     | Remote user to connect ot the PKI host to                             |
+
 
 ## Certificate suffixes
 
