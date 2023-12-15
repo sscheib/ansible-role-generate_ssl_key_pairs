@@ -116,7 +116,7 @@ _crt_csr_extended_key_usage: '{{ crt_csr_extended_key_usage | default(_def_crt_c
 #
 
 # whether to fetch the CRL certificate/s
-_crt_ca_fetch_ca_crl_cert: '{{ crt_ca_fetch_ca_crl_cert | default(_def_crt_ca_fetch_crl_ca_cert) }}'
+_crt_ca_fetch_ca_crl_cert: '{{ crt_ca_fetch_ca_crl_cert | default(_def_crt_ca_fetch_ca_crl_cert) }}'
 
 # whether to combine the CRLs into one CRL file (in case of multiple CRLs to fetch)
 _crt_combine_ca_crl_certs: '{{ crt_combine_ca_crl_certs | default(_def_crt_combine_ca_crl_certs) }}'
