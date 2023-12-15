@@ -78,6 +78,12 @@ _def_crt_csr_state: 'Default Province'
 # CSR locality name (L)
 _def_crt_csr_loc: 'Default Locality'
 
+# CSR key usage
+_def_crt_csr_key_usage:
+  - 'digitalSignature'
+  - 'keyEncipherment'
+  - 'keyAgreement'
+
 # CSR extended key usage
 _def_crt_csr_extended_key_usage:
   - 'clientAuth'

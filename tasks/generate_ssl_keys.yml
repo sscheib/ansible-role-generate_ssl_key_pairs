@@ -31,7 +31,7 @@
         organizational_unit_name: '{{ _crt_csr_org_unit }}'
         state_or_province_name: '{{ _crt_csr_state }}'
         locality_name: '{{ _crt_csr_loc }}'
-        key_usage: '{{ crt_csr_key_usage | default(omit) }}'
+        key_usage: '{{ _crt_csr_key_usage }}'
         key_usage_critical: true
         extended_key_usage: '{{ _crt_csr_extended_key_usage }}'
 

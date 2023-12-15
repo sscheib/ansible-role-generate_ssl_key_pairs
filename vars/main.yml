@@ -108,6 +108,9 @@ _crt_csr_loc: '{{ crt_csr_loc | default(_def_crt_csr_loc) }}'
 # CSR common name (usually the FQDN)
 _crt_csr_common_name: '{{ crt_csr_common_name | default(_crt_cert_fqdn) }}'
 
+# CSR key usage
+_crt_csr_key_usage: '{{ crt_csr_key_usage | default(_def_crt_csr_key_usage) }}'
+
 # CSR extended key usage
 _crt_csr_extended_key_usage: '{{ crt_csr_extended_key_usage | default(_def_crt_csr_extended_key_usage) }}'
 
