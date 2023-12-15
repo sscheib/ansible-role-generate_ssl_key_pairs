@@ -33,11 +33,12 @@ This does **not** affect users including the role with variables defined via `ex
 
 | variable                                     | default                               | required | description                                                           |
 | :---------------------------------           | :-----------------------------------  | :------- | :---------------------------------------------------------------------|
-| `crt_cert_fqdn`                              | unset                                 | true     | Fully qualified domain name (FQDN) for the cert                       |
+| `crt_cert_fqdn`                              | unset                                 | true     | FQDN[^1] for the cert. This will be used to define the cert file name.|
 | `crt_ca_priv_key_pass`                       | unset                                 | true     | Passphrase for the certificate authority (CA) private key             |
 | `crt_pki_host`                               | unset                                 | true     | PKI host - this is where the key generation will happen               |
 | `crt_pki_host_remote_user`                   | unset                                 | true     | Remote user to connect ot the PKI host to                             |
 
+[^1]: Fully Qualified Domain Name
 
 ## Certificate suffixes
 
