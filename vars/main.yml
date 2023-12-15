@@ -226,21 +226,21 @@ _crt_remote_ca_public_key_dir_mode: >-
   }}
 
 # certificate authority chain certificate
-crt_remote_ca_chain_cert_path: '{{ crt_remote_ca_chain_cert_path | default(_def_crt_remote_ca_chain_cert_path) }}'
-crt_remote_ca_chain_cert_owner: '{{ crt_remote_ca_chain_cert_owner | default(_def_crt_remote_ca_chain_cert_owner) }}'
-crt_remote_ca_chain_cert_group: '{{ crt_remote_ca_chain_cert_group | default(_def_crt_remote_ca_chain_cert_group) }}'
-crt_remote_ca_chain_cert_mode: '{{ crt_remote_ca_chain_cert_mode | default(_def_crt_remote_ca_chain_cert_mode) }}'
+_crt_remote_ca_chain_cert_path: '{{ crt_remote_ca_chain_cert_path | default(_def_crt_remote_ca_chain_cert_path) }}'
+_crt_remote_ca_chain_cert_owner: '{{ crt_remote_ca_chain_cert_owner | default(_def_crt_remote_ca_chain_cert_owner) }}'
+_crt_remote_ca_chain_cert_group: '{{ crt_remote_ca_chain_cert_group | default(_def_crt_remote_ca_chain_cert_group) }}'
+_crt_remote_ca_chain_cert_mode: '{{ crt_remote_ca_chain_cert_mode | default(_def_crt_remote_ca_chain_cert_mode) }}'
 
 # certificate authority chain certificate directory
-crt_remote_ca_chain_cert_dir_owner: >-
+_crt_remote_ca_chain_cert_dir_owner: >-
   {{
     crt_remote_ca_chain_cert_dir_owner | default(_def_crt_remote_ca_chain_cert_dir_owner)
   }}
-crt_remote_ca_chain_cert_dir_group: >-
+_crt_remote_ca_chain_cert_dir_group: >-
   {{
     crt_remote_ca_chain_cert_dir_group | default(_def_crt_remote_ca_chain_cert_dir_group)
   }}
-crt_remote_ca_chain_cert_dir_mode: >-
+_crt_remote_ca_chain_cert_dir_mode: >-
   {{
     crt_remote_ca_chain_cert_dir_mode | default(_def_crt_remote_ca_chain_cert_dir_mode)
   }}
