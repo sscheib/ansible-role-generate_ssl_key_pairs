@@ -91,4 +91,6 @@
   when: >
     _crt_combine_ca_crl_certs is defined
     and _crt_combine_ca_crl_certs
+    and _crt_ca_fetch_ca_crl_cert is defined
+    and _crt_ca_fetch_ca_crl_cert
 ...
