@@ -110,6 +110,7 @@ Role Variables
 | `crt_csr_country`                                           | CSR country name (C)                                                                                      |
 | `crt_csr_state`                                             | CSR state name (S)                                                                                        |
 | `crt_csr_loc`                                               | CSR locality name (L)                                                                                     |
+| `crt_csr_key_usage`                                         | CSR key usage                                                                                             |
 | `crt_csr_extended_key_usage`                                | CSR extended key usage                                                                                    |
 
 #### Variable to default variable
@@ -121,6 +122,7 @@ Role Variables
 | `crt_csr_country`                                           | `_def_crt_csr_country`                                                                                    | 
 | `crt_csr_state`                                             | `_def_crt_csr_state`                                                                                      | 
 | `crt_csr_loc`                                               | `_def_crt_csr_loc`                                                                                        | 
+| `crt_csr_key_usage`                                         | `_def_crt_csr_key_usage`                                                                                  | 
 | `crt_csr_extended_key_usage`                                | `_def_crt_csr_extended_key_usage`                                                                         | 
 
 #### Default variable to default value and requirement
@@ -132,6 +134,7 @@ Role Variables
 | `_def_crt_csr_country`                                      | `XX`                                                                                           | false    |
 | `_def_crt_csr_state`                                        | `Default Province`                                                                             | false    |
 | `_def_crt_csr_loc`                                          | `Default Locality`                                                                             | false    |
+| `_def_crt_csr_key_usage`                                    | `['digitalSignature', 'keyEncipherment', 'keyAgreement']`                                      | false    |
 | `_def_crt_csr_extended_key_usage`                           | `['clientAuth', 'serverAuth']`                                                                 | false    |
 
 ## Certificate Revocation List (CRL)
@@ -449,6 +452,12 @@ Example Playbook
 
     # CSR common name (usually the FQDN)
     crt_csr_common_name: 'webserver.example.com'
+
+    # CSR key usage:
+    crt_csr_key_usage:
+      - 'digitalSignature'
+      - 'keyEncipherment'
+      - 'keyAgreement'
 
     # CSR extended key usage
     crt_csr_extended_key_usage:
