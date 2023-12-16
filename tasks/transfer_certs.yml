@@ -30,7 +30,7 @@
 
 - name: 'transfer_certs | Copy certificate private key to {{ _crt_remote_public_key_path }}'
   ansible.builtin.copy:
-    src: '{{ _crt_local_dest_path }}/{{ inventory_hostname }}/{{ _crt_priv_key_path | basename }}'
+    src: '{{ _crt_local_dest_path }}/{{ inventory_hostname }}/{{ _crt_cert_path | basename }}'
     dest: '{{ _crt_remote_public_key_path }}'
     owner: '{{ _crt_remote_public_key_owner }}'
     group: '{{ _crt_remote_public_key_group }}'
