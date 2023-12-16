@@ -379,7 +379,7 @@ placed with their original name into `crt_remote_ca_crl_path`.
 Dependencies
 ------------
 
-This role makes use of the collection [`community.crypto`](https://github.com/ansible-collections/community.crypto) and the collection [`ansible.posix`](https://github.com/ansible-collections/ansible.posix) which are both specified in `collections/requirements.yml`.
+This role makes use of the collection [`community.crypto`](https://github.com/ansible-collections/community.crypto) and which is specified in `collections/requirements.yml`.
 
 Example Playbook
 ----------------
