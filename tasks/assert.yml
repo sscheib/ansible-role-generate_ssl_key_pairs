@@ -10,6 +10,7 @@
 
     success_msg: "Variable '{{ _var }}' defined properly - value: '{{ lookup('ansible.builtin.vars', _var) }}'"
     fail_msg: "Variable '{{ _var }}' failed to validate"
+  quiet: '{{ _crt_quiet_assert | default(false) }}'
   loop:
     - '_crt_ca_fetch_ca_cert'
     - '_crt_ca_fetch_ca_chain_cert'
@@ -18,6 +19,7 @@
     - '_crt_force_priv_key_generation'
     - '_crt_quiet_assert'
     - '_crt_remove_temporary_local_certificates'
+    - '_crt_deploy_certificates'
   loop_control:
     loop_var: '_var'
 

@@ -164,6 +164,9 @@ _crt_remove_temporary_local_certificates: >-
     crt_remove_temporary_local_certificates | default(_def_crt_remove_temporary_local_certificates)
   }}
 
+# whether to deploy the certificate to the managed node
+_crt_deploy_certificates: '{{ crt_deploy_certificates | default(_def_crt_deploy_certificates) }}'
+
 #
 # Managed node certificate paths
 #
