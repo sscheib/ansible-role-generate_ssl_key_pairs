@@ -1,6 +1,4 @@
 ---
-# NOTE: _crt_quiet_assert does not impact this task, as it first needs to be ensured that it actually is
-#       properly defined
 - name: 'assert | Ensure mandatory variables, as  well as variables, which have a default value, are set (boolean)'
   ansible.builtin.assert:
     that:
@@ -10,7 +8,8 @@
 
     success_msg: "Variable '{{ _var }}' defined properly - value: '{{ lookup('ansible.builtin.vars', _var) }}'"
     fail_msg: "Variable '{{ _var }}' failed to validate"
-  quiet: '{{ _crt_quiet_assert | default(false) }}'
+    # trying to use _crt_quiet_assert, if not possible, do not quiet
+    quiet: '{{ _crt_quiet_assert | default(false) }}'
   loop:
     - '_crt_ca_fetch_ca_cert'
     - '_crt_ca_fetch_ca_chain_cert'
