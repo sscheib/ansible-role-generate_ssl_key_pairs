@@ -14,6 +14,9 @@
 - name: 'Include tasks to transfer the certificates to the managed node'
   ansible.builtin.include_tasks:
     file: 'transfer_certs.yml'
+  when: >
+    _crt_deploy_certificates is defined
+    and _crt_deploy_certificates
 
 - name: 'Include tasks to cleanup locally stored files'
   ansible.builtin.include_tasks:

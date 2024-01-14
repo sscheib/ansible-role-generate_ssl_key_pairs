@@ -212,6 +212,7 @@ This does **not** affect users including the role with variables defined via `ex
 | `crt_local_dest_path_mode`                                  | Mode of `{{ crt_local_dest_path }}`                                                                       |
 | `crt_quiet_assert`                                          | Whether to quiet assert                                                                                   |
 | `crt_remove_temporary_local_certificates`                   | Whether to remove locally stored temporary certificates (will break idempotency when set to `true`)       |
+| `crt_deploy_certificates`                                   | Whether to deploy certificates to the managed node (don't forget to turn off to remove local files :>)    |
 
 #### Variable to default variable
 | variable                                                    | default variable                                                                                          |
@@ -222,6 +223,7 @@ This does **not** affect users including the role with variables defined via `ex
 | `crt_local_dest_path_mode`                                  | `_def_crt_local_dest_path_mode`                                                                           |
 | `crt_quiet_assert`                                          | `_def_crt_quiet_assert`                                                                                   |
 | `crt_remove_temporary_local_certificates`                   | `_def_crt_remove_temporary_local_certificates`                                                            |
+| `crt_deploy_certificates`                                   | `_def_crt_deploy_certificates`                                                                            |
 
 #### Default variable to default value and requirement
 | default variable                                            | default value                                                                                  | required |
@@ -232,6 +234,7 @@ This does **not** affect users including the role with variables defined via `ex
 | `_def_crt_local_dest_path_mode`                             | `0700`                                                                                         | false    |
 | `_def_crt_quiet_assert`                                     | `true`                                                                                         | false    |
 | `_def_crt_remove_temporary_local_certificates`              | `true`                                                                                         | false    |
+| `_def_crt_deploy_certificates`                              | `true`                                                                                         | false    |
 
 ## Private key infrastructure (PKI) host
 
