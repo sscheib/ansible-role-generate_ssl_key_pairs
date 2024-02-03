@@ -19,6 +19,7 @@
     - '_crt_quiet_assert'
     - '_crt_remove_temporary_local_certificates'
     - '_crt_deploy_certificates'
+    - '_crt_install_prerequisite_packages'
   loop_control:
     loop_var: '_var'
 

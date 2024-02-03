@@ -197,4 +197,9 @@ _def_crt_remote_ca_crl_mode: '0400'
 _def_crt_remote_ca_crl_dir_owner: 'root'
 _def_crt_remote_ca_crl_dir_group: 'root'
 _def_crt_remote_ca_crl_dir_mode: '0700'
+
+# whether to install prerequisite packages
+# only disable when you are sure that these are present, otherwise the automation *will* break
+# this helps to speed up the role a little
+_def_crt_install_prerequisite_packages: true
 ...
