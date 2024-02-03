@@ -167,6 +167,14 @@ _crt_remove_temporary_local_certificates: >-
 # whether to deploy the certificate to the managed node
 _crt_deploy_certificates: '{{ crt_deploy_certificates | default(_def_crt_deploy_certificates) }}'
 
+# whether to install prerequisite packages
+# only disable when you are sure that these are present, otherwise the automation *will* break
+# this helps to speed up the role a little
+_crt_install_prerequisite_packages: >-
+  {{
+    crt_install_prerequisite_packages | default(_def_crt_install_prerequisite_packages)
+  }}
+
 #
 # Managed node certificate paths
 #
