@@ -7,4 +7,7 @@
 - name: 'prerequisites | Include tasks to install the required packages'
   ansible.builtin.include_tasks:
     file: 'prerequisites_packages.yml'
+  when: >
+    _crt_install_prerequisite_packages is defined
+    and _crt_install_prerequisite_packages
 ...

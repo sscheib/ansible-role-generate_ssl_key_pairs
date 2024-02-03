@@ -44,7 +44,4 @@
   remote_user: '{{ _crt_pki_host_remote_user }}'
   vars:
     ansible_ssh_port: '{{ _crt_pki_host_remote_port }}'
-  when: >
-    _crt_install_prerequisite_packages is defined
-    and _crt_install_prerequisite_packages
 ...
