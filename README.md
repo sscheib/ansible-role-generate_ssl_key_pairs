@@ -6,10 +6,15 @@ generate_ssl_key_pairs
 Generates SSL certificates on a PKI host and transfers the generated public and private key to the Ansible managed nodes. Optionally, the certificate authoritie's
 certificate/s can be transferred as well as the optional Certificate Revocation List certificate/s.
 
+Currently supported operating systems for the PKI host:
+- Red Hat Enterprise Linux 8, 9
+- Debian 11, 12
+
 Requirements
 ------------
 
-This role requires a fully-setup Public Key Infrastructure (PKI).
+This role requires a fully-setup Public Key Infrastructure (PKI). If you are looking for an automated way of setting this up, you can consider my role
+[`public_key_infrastructure`](https://github.com/sscheib/ansible-role-generate_ssl_key_pairs).
 
 Role Variables
 --------------
