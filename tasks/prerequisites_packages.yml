@@ -34,6 +34,20 @@
         - '{{ role_path }}/vars'
         - '{{ playbook_dir }}/vars'
 
+- name: 'prerequisites_packages | Ensure _crt_required_packages is populated'
+  ansible.builtin.assert:
+    that:
+      - '_crt_required_packages is defined'
+      - '_crt_required_packages is not string'
+      - '_crt_required_packages is iterable'
+      - '_crt_required_packages is sequence'
+      - '_crt_required_packages | length > 0'
+    success_msg: "Variable '_crt_required_packages' is properly defined"
+    fail_msg: >-
+      Variable '_crt_required_packages' failed validation. Please check if your operating system
+      is supported by this role and populates the variable '_crt_required_packages' correctly
+    quiet: '{{ _crt_quiet_assert }}'
+
 - name: 'prerequisites_packages | Ensure required packages are installed'
   ansible.builtin.package:
     name: '{{ _crt_required_packages }}'
