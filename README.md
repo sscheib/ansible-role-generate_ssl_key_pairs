@@ -134,6 +134,9 @@ This does **not** affect users including the role with variables defined via `ex
 | `crt_csr_loc`                                               | CSR locality name (L)                                                                                     |
 | `crt_csr_key_usage`                                         | CSR key usage                                                                                             |
 | `crt_csr_extended_key_usage`                                | CSR extended key usage                                                                                    |
+| `crt_csr_subject_alt_name_critical`                         | Whether the subjectAltName (SAN) should be considered critical                                            | 
+| `crt_csr_use_common_name_for_san`                           | Whether the common name should be used for the subjectAltName (SAN) if no specific SANs are provided      | 
+| `crt_csr_subject_alt_names`                                 | List of subjectAltNames (SANs) to use. Items need to be prefixed by their options (`DNS:`, `IP:`, etc.)   | 
 
 #### Variable to default variable
 | variable                                                    | default variable                                                                                          |
@@ -146,6 +149,9 @@ This does **not** affect users including the role with variables defined via `ex
 | `crt_csr_loc`                                               | `_def_crt_csr_loc`                                                                                        |
 | `crt_csr_key_usage`                                         | `_def_crt_csr_key_usage`                                                                                  |
 | `crt_csr_extended_key_usage`                                | `_def_crt_csr_extended_key_usage`                                                                         |
+| `crt_csr_subject_alt_name_critical`                         | `_def_crt_csr_subject_alt_name_critical`                                                                  |
+| `crt_csr_use_common_name_for_san`                           | `_def_crt_csr_use_common_name_for_san`                                                                    |
+| `crt_csr_subject_alt_names`                                 | This variable has no default variable, but is set to `None` if not defined                                | 
 
 #### Default variable to default value and requirement
 | default variable                                            | default value                                                                                  | required |
@@ -158,6 +164,8 @@ This does **not** affect users including the role with variables defined via `ex
 | `_def_crt_csr_loc`                                          | `Default Locality`                                                                             | false    |
 | `_def_crt_csr_key_usage`                                    | `['digitalSignature', 'keyEncipherment', 'keyAgreement']`                                      | false    |
 | `_def_crt_csr_extended_key_usage`                           | `['clientAuth', 'serverAuth']`                                                                 | false    |
+| `_def_crt_csr_subject_alt_name_critical`                    | `false`                                                                                        | false    |
+| `_def_crt_csr_use_common_name_for_san`                      | `true`                                                                                         | false    |
 
 ## Certificate Revocation List (CRL)
 
@@ -512,6 +520,26 @@ Example Playbook
     crt_csr_extended_key_usage:
       - 'clientAuth'
       - 'serverAuth'
+
+    # 
+    # subjectAltName (SAN) should be considered critical
+    crt_csr_subject_alt_name_critical: true
+
+    # whether the common name should be used for the subjectAltName (SAN) if no specific SANs are provided
+    # as crt_csr_subject_alt_names is populated below, this setting does effectively nothing
+    crt_csr_use_common_name_for_san: true
+
+    # list of subjectAltNames (SANs) to use
+    crt_csr_subject_alt_names:
+      - 'DNS:host.example.com'
+      - 'DNS:alias.example.com'
+      - 'DNS:anotheralias.example.com'
+      - 'IP:127.0.0.1'
+      - 'IP:172.31.13.37'
+      - 'email:steffen@example.com'
+      - 'URI:https://host.example.com'
+      - 'otherName:1.3.6.1.4.1.311.20.2.3;UTF8:steffen@example.com'
+      - 'RID:1.3.3.7'
 
     # Certificate Revocation List (CRL)
     #

@@ -17,7 +17,7 @@ _def_crt_csr_suffix: 'csr.pem'
 _def_crt_crl_suffix: 'crl.pem'
 
 #
-# Certificate Authority CA)
+# Certificate Authority (CA)
 #
 
 # root directory of the CA
@@ -88,6 +88,12 @@ _def_crt_csr_key_usage:
 _def_crt_csr_extended_key_usage:
   - 'clientAuth'
   - 'serverAuth'
+
+# whether the subjectAltName (SAN) should be considered critical
+_def_crt_csr_subject_alt_name_critical: false
+
+# whether the common name should be used for the subjectAltName (SAN) if no specific SANs are provided
+_def_crt_csr_use_common_name_for_san: true
 
 #
 # Certificate Revocation List (CRL)

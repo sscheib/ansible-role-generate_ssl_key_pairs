@@ -28,7 +28,7 @@
     mode: '{{ _crt_remote_public_key_dir_mode }}'
   become: true
 
-- name: 'transfer_certs | Copy certificate private key to {{ _crt_remote_public_key_path }}'
+- name: 'transfer_certs | Copy certificate public key to {{ _crt_remote_public_key_path }}'
   ansible.builtin.copy:
     src: '{{ _crt_local_dest_path }}/{{ inventory_hostname }}/{{ _crt_cert_path | basename }}'
     dest: '{{ _crt_remote_public_key_path }}'

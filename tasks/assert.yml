@@ -20,6 +20,8 @@
     - '_crt_remove_temporary_local_certificates'
     - '_crt_deploy_certificates'
     - '_crt_install_prerequisite_packages'
+    - '_crt_csr_subject_alt_name_critical'
+    - '_crt_csr_use_common_name_for_san'
   loop_control:
     loop_var: '_var'
 
@@ -140,4 +142,58 @@
     fail_msg: "Variable '_crt_ca_priv_key_pass' failed to validate"
     quiet: true
   no_log: true
+
+- name: 'assert | Ensure optional list variables are defined properly - if defined'
+  ansible.builtin.assert:
+    that:
+      - >-
+        (
+          lookup('ansible.builtin.vars', __t_var, default=[]) is defined
+          and lookup('ansible.builtin.vars', __t_var, default=[]) != None
+          and lookup('ansible.builtin.vars', __t_var, default=[]) | length > 0
+        ) | ansible.builtin.ternary(
+          lookup('ansible.builtin.vars', __t_var, default=[]) is not string, true
+        )
+
+      - >-
+        (
+          lookup('ansible.builtin.vars', __t_var, default=[]) is defined
+          and lookup('ansible.builtin.vars', __t_var, default=[]) != None
+          and lookup('ansible.builtin.vars', __t_var, default=[]) | length > 0
+        ) | ansible.builtin.ternary(
+          lookup('ansible.builtin.vars', __t_var, default=[]) is not mapping, true
+        )
+
+      - >-
+        (
+          lookup('ansible.builtin.vars', __t_var, default=[]) is defined
+          and lookup('ansible.builtin.vars', __t_var, default=[]) != None
+          and lookup('ansible.builtin.vars', __t_var, default=[]) | length > 0
+        ) | ansible.builtin.ternary(
+          lookup('ansible.builtin.vars', __t_var, default=[]) is iterable, true
+        )
+
+      - >-
+        (
+          lookup('ansible.builtin.vars', __t_var, default=[]) is defined
+          and lookup('ansible.builtin.vars', __t_var, default=[]) != None
+          and lookup('ansible.builtin.vars', __t_var, default=[]) | length > 0
+        ) | ansible.builtin.ternary(
+          lookup('ansible.builtin.vars', __t_var, default=[]) is sequence, true
+        )
+
+    success_msg: >-
+      {{
+        'Variable ' ~ __t_var ~ ' defined properly - value: ' ~ lookup('ansible.builtin.vars', __t_var)
+        if lookup('ansible.builtin.vars', __t_var, default=[]) != None and
+        lookup('ansible.builtin.vars', __t_var, default=[]) | length > 0
+        else
+        'Variable ' ~ __t_var ~ ' is not defined or is an empty list'
+      }}
+    fail_msg: "Variable '{{ __t_var }}' failed to validate"
+    quiet: '{{ _crt_quiet_assert }}'
+  loop:
+    - '_crt_csr_subject_alt_names'
+  loop_control:
+    loop_var: '__t_var'
 ...
