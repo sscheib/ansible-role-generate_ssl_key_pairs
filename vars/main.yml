@@ -44,7 +44,7 @@ _crt_crl_suffix: '{{ crt_crl_suffix | default(_def_crt_crl_suffix) }}'
 
 
 #
-# Certificate Authority CA)
+# Certificate Authority (CA)
 #
 
 # root directory of the CA on the PKI host
@@ -113,6 +113,21 @@ _crt_csr_key_usage: '{{ crt_csr_key_usage | default(_def_crt_csr_key_usage) }}'
 
 # CSR extended key usage
 _crt_csr_extended_key_usage: '{{ crt_csr_extended_key_usage | default(_def_crt_csr_extended_key_usage) }}'
+
+# whether the subjectAltName (SAN) should be considered critical
+_crt_csr_subject_alt_name_critical: >-
+  {{
+    crt_csr_subject_alt_name_critical | default(_def_crt_csr_subject_alt_name_critical)
+  }}
+
+# whether the common name should be used for the subjectAltName (SAN) if no specific SANs are provided
+_crt_csr_use_common_name_for_san: >-
+  {{
+    crt_csr_use_common_name_for_san | default(_def_crt_csr_use_common_name_for_san)
+  }}
+
+# list of subjectAltNames (SANs) to use - list items need to be prefixed by their options (DNS:, IP:, etc.)
+_crt_csr_subject_alt_names: '{{ crt_csr_subject_alt_names | default(None) }}'
 
 #
 # Certificate Revocation List (CRL)

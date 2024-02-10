@@ -34,6 +34,18 @@
         key_usage: '{{ _crt_csr_key_usage }}'
         key_usage_critical: true
         extended_key_usage: '{{ _crt_csr_extended_key_usage }}'
+        use_common_name_for_san: '{{ _crt_csr_use_common_name_for_san }}'
+        subject_alt_name_critical: '{{ _crt_csr_subject_alt_name_critical }}'
+        subject_alt_name: >-
+          {{
+            _crt_csr_subject_alt_names |
+            join(',')
+            if _crt_csr_subject_alt_names is defined
+            and _crt_csr_subject_alt_names != 'None'
+            and _crt_csr_subject_alt_names | length > 0
+            else
+            omit
+          }}
 
     - name: 'generate_ssl_keys | Sign the CSR for {{ _crt_cert_fqdn }}'
       community.crypto.x509_certificate:
