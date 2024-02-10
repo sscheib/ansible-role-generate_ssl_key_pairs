@@ -532,7 +532,10 @@ Example Playbook
     # list of subjectAltNames (SANs) to use
     crt_csr_subject_alt_names:
       - 'DNS:host.example.com'
+      - 'DNS:alias.example.com'
+      - 'DNS:anotheralias.example.com'
       - 'IP:127.0.0.1'
+      - 'IP:172.31.13.37'
       - 'email:steffen@example.com'
       - 'URI:https://host.example.com'
       - 'otherName:1.3.6.1.4.1.311.20.2.3;UTF8:steffen@example.com'
