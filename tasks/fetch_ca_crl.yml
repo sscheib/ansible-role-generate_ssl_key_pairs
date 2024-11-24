@@ -55,6 +55,8 @@
       when: >
         _crt_ca_fetch_ca_crl_cert is defined
         and _crt_ca_fetch_ca_crl_cert
+        and _crt_ca_crl_certs is defined
+        and _crt_ca_crl_certs | length > 0
       block:
 
         - name: 'fetch_ca_crl | Fetch CRL certificates'
