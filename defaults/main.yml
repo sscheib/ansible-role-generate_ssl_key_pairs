@@ -140,7 +140,11 @@ _def_crt_quiet_assert: true
 _def_crt_pki_host_remote_port: 22
 
 # whether to remove locally stored temporary certificates (will break idempotency)
+# this will remove only the files and the directory for one specific host
 _def_crt_remove_temporary_local_certificates: true
+
+# whether to remove crt_local_dest_path completely
+_def_crt_remove_local_dest_path: false
 
 # whether to deploy the certificate to the managed node
 _def_crt_deploy_certificates: true

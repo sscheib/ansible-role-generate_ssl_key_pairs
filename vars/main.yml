@@ -174,9 +174,16 @@ _crt_quiet_assert: '{{ crt_quiet_assert | default(_def_crt_quiet_assert) }}'
 _crt_pki_host_remote_port: '{{ crt_pki_host_remote_port | default(_def_crt_pki_host_remote_port) }}'
 
 # whether to remove locally stored temporary certificates (will break idempotency)
+# this will remove only the files and the directory for one specific host
 _crt_remove_temporary_local_certificates: >-
   {{
     crt_remove_temporary_local_certificates | default(_def_crt_remove_temporary_local_certificates)
+  }}
+
+# whether to remove crt_local_dest_path completely
+_crt_remove_local_dest_path: >-
+  {{
+    crt_remove_local_dest_path | default(_def_crt_remove_local_dest_path)
   }}
 
 # whether to deploy the certificate to the managed node
