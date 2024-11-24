@@ -20,7 +20,7 @@ _crt_pki_host_remote_user: '{{ crt_pki_host_remote_user | mandatory }}'
 #
 
 # CRL certificates to fetch
-_crt_ca_crl_certs: '{{ crt_ca_crl_certs | default(None) }}'
+_crt_ca_crl_certs: '{{ crt_ca_crl_certs | default([]) }}'
 
 #
 # optional (with default)
