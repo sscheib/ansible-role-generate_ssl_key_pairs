@@ -139,11 +139,11 @@ _def_crt_quiet_assert: true
 # SSH port of the PKI host
 _def_crt_pki_host_remote_port: 22
 
-# whether to remove locally stored temporary certificates (will break idempotency)
+# whether to remove locally stored temporary certificates (will break idempotency, if enabled)
 # this will remove only the files and the directory for one specific host
 _def_crt_remove_temporary_local_certificates: true
 
-# whether to remove crt_local_dest_path completely
+# whether to remove crt_local_dest_path completely (will break idempotency, if enabled)
 _def_crt_remove_local_dest_path: false
 
 # whether to deploy the certificate to the managed node

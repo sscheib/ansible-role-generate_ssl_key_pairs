@@ -585,8 +585,11 @@ Example Playbook
     # SSH port of the PKI host
     crt_pki_host_remote_port: 1905
     
-    # whether to remove locally stored temporary certificates (will break idempotency)
+    # whether to remove locally stored temporary certificates (will break idempotency, if enabled)
     crt_remove_temporary_local_certificates: true
+
+    # whether to remove crt_local_dest_path completely (will break idempotency, if enabled)
+    crt_remove_local_dest_path: false
 
     # path on the managed node where to store fetched certificates
 
