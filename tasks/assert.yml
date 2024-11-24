@@ -18,6 +18,7 @@
     - '_crt_force_priv_key_generation'
     - '_crt_quiet_assert'
     - '_crt_remove_temporary_local_certificates'
+    - '_crt_remove_local_dest_path'
     - '_crt_deploy_certificates'
     - '_crt_install_prerequisite_packages'
     - '_crt_csr_subject_alt_name_critical'
