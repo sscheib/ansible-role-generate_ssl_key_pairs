@@ -83,6 +83,15 @@ _crt_ca_fetch_ca_cert: '{{ crt_ca_fetch_ca_cert | default(_def_crt_ca_fetch_ca_c
 # whether fo fetch the CA chain certificate (for intermediate CAs)
 _crt_ca_fetch_ca_chain_cert: '{{ crt_ca_fetch_ca_chain_cert | default(_def_crt_ca_fetch_ca_chain_cert) }}'
 
+# how long the certificate is valid
+_crt_ca_not_after: '{{ crt_ca_not_after | default(_def_crt_ca_not_after) }}'
+
+# from when should the certificate be valid
+_crt_ca_not_before: '{{ crt_ca_not_before | default(_def_crt_ca_not_before) }}'
+
+# whether to force generation of the certificate even if it's already present
+_crt_ca_force_generation: '{{ crt_ca_force_generation | default(_def_crt_ca_force_generation) }}'
+
 #
 # Certificate Signing Request (CSR)
 #

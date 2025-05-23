@@ -88,6 +88,9 @@ This does **not** affect users including the role with variables defined via `ex
 | `crt_ca_priv_key_path`                                      | Path of the CA private key                                                                                |
 | `crt_ca_fetch_ca_cert`                                      | Whether to fetch the CA certificate                                                                       |
 | `crt_ca_fetch_ca_chain_cert`                                | Whether to fetch the CA chain certificate (for intermediate CAs)                                          |
+| `crt_ca_not_after`                                          | How long the certificate is valid                                                                         |
+| `crt_ca_not_before`                                         | From when should the certificate be valid                                                                 |
+| `crt_ca_force_generation`                                   | Whether to force generation of the certificate *BE CAREFUL: This will overwrite an existing certificate!* |
 
 #### Variable to default variable
 | variable                                                    | default variable                                                                                          |
@@ -104,6 +107,9 @@ This does **not** affect users including the role with variables defined via `ex
 | `crt_ca_priv_key_path`                                      | `_def_crt_ca_priv_key_path`                                                                               |
 | `crt_ca_fetch_ca_cert`                                      | `_def_crt_ca_fetch_ca_cert`                                                                               |
 | `crt_ca_fetch_ca_chain_cert`                                | `_def_crt_ca_fetch_ca_chain_cert`                                                                         |
+| `crt_ca_not_after`                                          | `_def_crt_ca_not_after`                                                                                   |
+| `crt_ca_not_before`                                         | `_def_crt_ca_not_before`                                                                                  |
+| `crt_ca_force_generation`                                   | `_def_crt_ca_force_generation`                                                                            |
 
 #### Default variable to default value and requirement
 | default variable                                            | default value                                                                                  | required |
@@ -120,6 +126,9 @@ This does **not** affect users including the role with variables defined via `ex
 | `_def_crt_ca_priv_key_path`                                 | `{{ _def_crt_ca_priv_key_dir_path }}/{{ _def_crt_ca_priv_key_name }}`                          | false    |
 | `_def_crt_ca_fetch_ca_cert`                                 | `true`                                                                                         | false    |
 | `_def_crt_ca_fetch_ca_chain_cert`                           | `true`                                                                                         | false    |
+| `_def_crt_ca_not_after`                                     | `+3650d`                                                                                       | false    |
+| `_def_crt_ca_not_before`                                    | `+0s`                                                                                          | false    |
+| `_def_crt_ca_force_generation`                              | `false`                                                                                        | false    |
 
 ## Certificate Signing Request (CSR)
 
@@ -488,6 +497,15 @@ Example Playbook
     
     # whether fo fetch the CA chain certificate (for intermediate CAs)
     crt_ca_fetch_ca_chain_cert: true
+
+    # make the certificate valid for 1 year
+    crt_ca_not_after: '+365d'
+
+    # make the certificate valid starting from now on
+    crt_ca_not_before: '+0s'
+
+    # do not regenerate the certificate forcefully
+    crt_ca_force_generation: false
 
     # Certificate Signing Request (CSR)
     #

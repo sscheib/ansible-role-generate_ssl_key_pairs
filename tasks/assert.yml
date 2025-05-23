@@ -1,5 +1,5 @@
 ---
-- name: 'assert | Ensure mandatory variables, as  well as variables, which have a default value, are set (boolean)'
+- name: 'assert | Ensure mandatory variables, as well as variables, which have a default value, are set (boolean)'
   ansible.builtin.assert:
     that:
       - "lookup('ansible.builtin.vars', _var) is defined"
@@ -14,6 +14,7 @@
     - '_crt_ca_fetch_ca_cert'
     - '_crt_ca_fetch_ca_chain_cert'
     - '_crt_ca_fetch_ca_crl_cert'
+    - '_crt_ca_force_generation'
     - '_crt_combine_ca_crl_certs'
     - '_crt_force_priv_key_generation'
     - '_crt_quiet_assert'
@@ -46,6 +47,8 @@
     - '_crt_ca_cert_path'
     - '_crt_ca_chain_cert_path'
     - '_crt_ca_csr_dir_path'
+    - '_crt_ca_not_after'
+    - '_crt_ca_not_before'
     - '_crt_ca_priv_key_dir_path'
     - '_crt_ca_priv_key_name'
     - '_crt_ca_priv_key_path'

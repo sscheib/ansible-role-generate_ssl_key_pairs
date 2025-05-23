@@ -55,6 +55,9 @@
         ownca_path: '{{ _crt_ca_cert_path }}'
         ownca_privatekey_path: '{{ _crt_ca_priv_key_path }}'
         ownca_privatekey_passphrase: '{{ _crt_ca_priv_key_pass }}'
+        ownca_not_after: '{{ _crt_ca_not_after }}'
+        ownca_not_before: '{{ _crt_ca_not_before }}'
+        force: '{{ _crt_ca_force_generation }}'
         provider: 'ownca'
 
     - name: 'generate_ssl_keys | Fetch generated private and public key for {{ _crt_cert_fqdn }}'
