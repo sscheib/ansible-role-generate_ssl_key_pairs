@@ -1,21 +1,25 @@
 ---
 repos:
   - repo: 'https://github.com/ansible/ansible-lint'
-    rev: 'v6.20.3'
+    rev: 'v25.4.0'
     hooks:
-      - name: 'Ansible-lint'
+      - id: 'ansible-lint'
+        stages:
+          - 'pre-commit'
         additional_dependencies:
           # https://github.com/pre-commit/pre-commit/issues/1526
-          # If you want to use specific version of ansible-core or ansible, feel
-          # free to override `additional_dependencies` in your own hook config
-          # file.
-          - 'ansible-core>=2.15'
+          # renovate: datasource=pypi
+          - 'ansible-core==2.18.1'
         always_run: true
         description: 'This hook runs ansible-lint.'
         entry: 'python3 -m ansiblelint -v --force-color'
-        id: 'ansible-lint'
         language: 'python'
         # do not pass files to ansible-lint, see:
         # https://github.com/ansible/ansible-lint/issues/611
         pass_filenames: false
+        # patch level languages are not possible, unless a corresponding symlink is created for
+        # e.g. python3.12.4 -> python3.12. This would defeat the purpose of being very specific,
+        # therefore limitting the language to a minor version only
+        # renovate dep: datasource=python-version versioning=python depName=python
+        language_version: '3.12'
 ...

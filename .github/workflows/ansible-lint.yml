@@ -1,15 +1,347 @@
 ---
 name: 'ansible-lint'
-on:
+on:  # yamllint disable-line rule:truthy
+  push:
+    branches:
+      - 'main'
+
   pull_request:
-    branches: ['main']
-  workflow_dispatch: {}
+    branches:
+      - 'main'
+
+    paths:
+      - '.github/workflows/ansible-lint.yml'
+      - 'defaults/**'
+      - 'files/**'
+      - 'handlers/**'
+      - 'library/**'
+      - 'lookup_plugins/**'
+      - 'meta/**'
+      - 'module_utils/**'
+      - 'molecule/**'
+      - 'tasks/**'
+      - 'templates/**'
+      - 'vars/**'
+
+  workflow_dispatch:
+    inputs:
+      ansibleGalaxyVerbosity:
+        description: 'Enable ansible-galaxy verbosity?'
+        type: 'choice'
+        default: '5'
+        options:
+          - '0'
+          - '1'
+          - '2'
+          - '3'
+          - '4'
+          - '5'
+
+      ansibleLintVerbosity:
+        description: 'Enable ansible-lint verbosity?'
+        type: 'choice'
+        default: '5'
+        options:
+          - '0'
+          - '1'
+          - '2'
+          - '3'
+          - '4'
+          - '5'
+
+      failMissing:
+        description: 'Fail if a requirements file is missing?'
+        type: 'choice'
+        default: 'false'
+        options:
+          - 'true'
+          - 'false'
+
+permissions:
+  contents: 'read'
+
+env:
+  # requirement files to consider for installing required Ansible Collections and Roles
+  # note:
+  # ensure to set failMissing correctly, depending on whether the action should fail
+  # on a missing requirements file or skip installing it (default)
+  REQUIREMENTS_FILES: >-
+    ./molecule/default/requirements.yml,
+    ./collections/requirements.yml
+
+  # Red Hat Automation Hub repository that contains certified content
+  ANSIBLE_GALAXY_SERVER_CERTIFIED_URL: >-
+    https://console.redhat.com/api/automation-hub/content/published/
+  ANSIBLE_GALAXY_SERVER_CERTIFIED_AUTH_URL: >-
+    https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
+  ANSIBLE_GALAXY_SERVER_CERTIFIED_TOKEN: '${{ secrets.AUTOMATION_HUB_TOKEN }}'
+
+  # Red Hat Automation Hub repository that contains validated content
+  ANSIBLE_GALAXY_SERVER_VALIDATED_URL: >-
+    https://console.redhat.com/api/automation-hub/content/validated/
+  ANSIBLE_GALAXY_SERVER_VALIDATED_AUTH_URL: >-
+    https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
+  ANSIBLE_GALAXY_SERVER_VALIDATED_TOKEN: '${{ secrets.AUTOMATION_HUB_TOKEN }}'
+
+  # Ansible Galaxy server URL
+  ANSIBLE_GALAXY_SERVER_COMMUNITY_URL: 'https://galaxy.ansible.com'
+
+  # The installation of Ansible content will be done in the following order
+  # - certified repository
+  # - validated repository
+  # - community (galaxy)
+  #
+  # If none of the three Automation Hub/Galaxy servers yield a successful installation, the action
+  # will fail.
+  ANSIBLE_GALAXY_SERVER_LIST: 'certified,validated,community'
+
+  # don't display a progress wheel
+  ANSIBLE_GALAXY_DISPLAY_PROGRESS: false
+
+  # increase server timeout (default is 60 seconds)
+  ANSIBLE_GALAXY_SERVER_TIMEOUT: 120
+
 jobs:
-  build:
-    name: 'Ansible Lint'
-    runs-on: 'ubuntu-latest'
+  check-secrets:
+    name: 'Check if required secrets are available'
+    runs-on: 'ubuntu-24.04'
+    permissions:
+      contents: 'read'
+    outputs:
+      secrets-defined: '${{ steps.secret-check.outputs.secrets-defined }}'
     steps:
-      - uses: 'actions/checkout@v4'
+      - name: 'Harden Runner'
+        uses: 'step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0' # v2.12.0
+        with:
+          disable-sudo: true
+          egress-policy: 'block'
+
+      - name: 'Check if all required secrets are defined'
+        id: 'secret-check'
+        shell: 'bash'
+        run: |
+          # fail if:
+          # - a variable is unbound
+          # - any command fails
+          # - a command in a pipe fails
+          # - a command in a sub-shell fails
+          set -Eeuo pipefail
+
+          [[ "${{ secrets.AUTOMATION_HUB_TOKEN }}" != '' ]] || {
+            echo "secrets-defined=false" >> "${GITHUB_OUTPUT}";
+            exit 0;
+          };
+
+          # secrets not empty, so assuming defined
+          echo "secrets-defined=true" >> "${GITHUB_OUTPUT}";
+
+  check-user-permissions:
+    if: "needs.check-secrets.outputs.secrets-defined == 'true'"
+    needs: 'check-secrets'
+    runs-on: 'ubuntu-24.04'
+    permissions:
+      contents: 'read'
+    outputs:
+      require-result: '${{ steps.check-access.outputs.require-result }}'
+    steps:
+      - name: 'Harden Runner'
+        uses: 'step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0' # v2.12.0
+        with:
+          egress-policy: 'block'
+          allowed-endpoints: >
+            api.github.com:443
+            github.com:443
+
+      - name: 'Get User Permissions'
+        id: 'check-access'
+        uses: 'actions-cool/check-user-permission@7b90a27f92f3961b368376107661682c441f6103' # v2.3.0
+        with:
+          require: 'write'
+          username: '${{ github.triggering_actor }}'
+        env:
+          GITHUB_TOKEN: '${{ secrets.token }}'
+
+      - name: 'Check User Permission'
+        if: "steps.check-access.outputs.require-result == 'false'"
+        shell: 'bash'
+        run: |
+          # fail if:
+          # - a variable is unbound
+          # - any command fails
+          # - a command in a pipe fails
+          # - a command in a sub-shell fails
+          set -Eeuo pipefail
+
+          # enable debug if runner runs in debug
+          [[ "${{ runner.debug }}" -ne 1 ]] || {
+            echo "INFO: Enabling bash trace";
+            set -x;
+          };
+
+          echo "${{ github.triggering_actor }} does not have permissions on this repo."
+          echo "Current permission level is ${{ steps.check-access.outputs.user-permission }}"
+          echo "Job originally triggered by ${{ github.actor }}"
+
+  ansible-lint:
+    runs-on: 'ubuntu-24.04'
+    needs: 'check-user-permissions'
+    if: "needs.check-user-permissions.outputs.require-result == 'true'"
+    permissions:
+      contents: 'write'
+    steps:
+      - name: 'Install NodeJS'
+        uses: 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020' # v4.4.0
+        with:
+          # renovate dep: datasource=npm depName=node
+          node-version: '20.19.2'
+
+      - name: 'Checkout code'
+        uses: 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' # v4.2.2
+
+      - name: 'Install Python'
+        uses: 'actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065' # v5.6.0
+        with:
+          # renovate dep: datasource=python-version versioning=python depName=python
+          python-version: '3.13.3'
+
+      - name: 'Install ansible-core and ansible-lint'
+        shell: 'bash'
+        run: |
+          # fail if:
+          # - a variable is unbound
+          # - any command fails
+          # - a command in a pipe fails
+          # - a command in a sub-shell fails
+          set -Eeuo pipefail
+
+          # enable debug if runner runs in debug
+          [[ "${{ runner.debug }}" -ne 1 ]] || {
+            echo "INFO: Enabling bash trace";
+            set -x;
+          };
+
+          # instruct pip to ignore that it is run as root
+          export PIP_ROOT_USER_ACTION=ignore
+          export PIP_BREAK_SYSTEM_PACKAGES=1
+
+          # renovate: datasource=pypi
+          pip3 install ansible-core==2.18.6
+
+          # renovate: datasource=pypi
+          pip3 install ansible-lint==25.4.0
+
+      - name: 'Install Ansible Collections and Roles'
+        shell: 'bash'
+        run: |
+          # fail if:
+          # - a variable is unbound
+          # - any command fails
+          # - a command in a pipe fails
+          # - a command in a sub-shell fails
+          set -Eeuo pipefail
+
+          # enable debug if runner runs in debug
+          [[ "${{ runner.debug }}" -ne 1 ]] || {
+            echo "INFO: Enabling bash trace";
+            set -x;
+          };
+
+          [[ -n "${{ env.REQUIREMENTS_FILES }}" ]] || {
+            echo "INFO: Environment variable REQUIREMENTS_FILES is not set, skipping installation.";
+            exit 0;
+          };
+          IFS=',' read -ra __files <<< "${{ env.REQUIREMENTS_FILES }}"
+
+          (
+            [[ "${{ github.event.inputs.ansibleGalaxyVerbosity }}" == "" ]] ||
+            [[ "${{ github.event.inputs.ansibleGalaxyVerbosity }}" -eq 0 ]]
+          ) || {
+
+            # check that input is greater or equal than 0 and
+            # less or equal than 5
+            (
+              [[ "${{ github.event.inputs.ansibleGalaxyVerbosity }}" -gt 0 ]] &&
+              [[ "${{ github.event.inputs.ansibleGalaxyVerbosity }}" -le 5 ]]
+            ) || {
+              echo "ERROR: ansibleGalaxyVerbosity has an invalid value: ";
+              echo "       '${{ github.event.inputs.ansibleGalaxyVerbosity }}'";
+              exit 1;
+            };
+
+            # add a v per verbosity level, so 3 becomes -vvv
+            declare __ansibleGalaxyVerbosity="-"
+            for i in {1..${{ github.event.inputs.ansibleGalaxyVerbosity }}}; do
+              __ansibleGalaxyVerbosity+="v";
+            done
+          };
+
+          [[ "${#__files[@]}" -gt 0 ]] || {
+            echo "INFO: No files defined in environment variable REQUIREMENTS_FILES, skipping installation";
+            exit 0;
+          };
+
+          for reqFile in "${__files[@]}"; do
+            # remove leading and trailing white spaces that can be in the item due
+            # to YAML multineline syntax (e.g. >-, |-, >, |)
+            __file="$(echo "${reqFile}" | awk '{$1=$1};1')"
+
+            echo "INFO: Processing '${__file}'"
+
+            # check if the file exists
+            [[ -f "${__file}" ]] || {
+
+              # do not fail, but skip
+              [[ "${{ github.event.inputs.failMissing }}" == "true" ]] || {
+                echo "Info: File '${__file}' does not exist or is not readable, skipping.";
+                continue;
+              };
+
+              echo "ERROR: File '${__file}' does not exist or is not readable, aborting.";
+              exit 1;
+            };
+
+            echo "INFO: Installing requirements from '${__file}'"
+            ansible-galaxy install -r "${__file}" ${__ansibleGalaxyVerbosity:=}
+          done
+
       - name: 'Run ansible-lint'
-        uses: 'ansible/ansible-lint@main'
+        shell: 'bash'
+        run: |
+          # fail if:
+          # - a variable is unbound
+          # - any command fails
+          # - a command in a pipe fails
+          # - a command in a sub-shell fails
+          set -Eeuo pipefail
+
+          # enable debug if runner runs in debug
+          [[ "${{ runner.debug }}" -ne 1 ]] || {
+            echo "INFO: Enabling bash trace";
+            set -x;
+          };
+
+          (
+            [[ "${{ github.event.inputs.ansibleLintVerbosity }}" == "" ]] ||
+            [[ "${{ github.event.inputs.ansibleLintVerbosity }}" -eq 0 ]]
+          ) || {
+
+            # check that input is greater or equal than 0 and
+            # less or equal than 5
+            (
+              [[ "${{ github.event.inputs.ansibleLintVerbosity }}" -gt 0 ]] &&
+              [[ "${{ github.event.inputs.ansibleLintVerbosity }}" -le 5 ]]
+            ) || {
+              echo "ERROR: ansibleLintVerbosity has an invalid value: ";
+              echo "       '${{ github.event.inputs.ansibleLintVerbosity }}'";
+              exit 1;
+            };
+
+            # add a v per verbosity level, so 3 becomes -vvv
+            declare __ansibleLintVerbosity="-"
+            for i in {1..${{ github.event.inputs.ansibleLintVerbosity }}}; do
+              __ansibleLintVerbosity+="v";
+            done
+          };
+
+          ansible-lint --config-file ${ANSIBLE_LINT_CONFIG:-./.ansible-lint} ${__ansibleLintVerbosity:=}
 ...

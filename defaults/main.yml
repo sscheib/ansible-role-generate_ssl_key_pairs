@@ -56,6 +56,15 @@ _def_crt_ca_fetch_ca_cert: true
 # whether to fetch the CA chain certificate (for intermediate CAs)
 _def_crt_ca_fetch_ca_chain_cert: true
 
+# how long the certificate is valid
+_def_crt_ca_not_after: '+3650d'
+
+# from when should the certificate be valid
+_def_crt_ca_not_before: '+0s'
+
+# whether to force generation of the certificate even if it's already present
+_def_crt_ca_force_generation: false
+
 #
 # Certificate Signing Request (CSR)
 #
